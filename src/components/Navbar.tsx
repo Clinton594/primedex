@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import WalletConnect from "./WalletConnect";
 
 import routes from "../constants/routes";
+import Metamask from "./icons/Metamask";
 
 export default function Navbar() {
   const [showWallet, toggleWallet] = useState(false);
@@ -48,7 +49,7 @@ export default function Navbar() {
               href="!#"
               className="g2 bg-danger text-white d-flex"
             >
-              <img width={30} className="mr-2" src="/img/icon1.png" alt="" />
+              <Metamask width={20} />
               Connect <span className="ml-2 d-none d-lg-block">Wallet</span>
             </a>
           )}

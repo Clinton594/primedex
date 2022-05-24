@@ -2701,20 +2701,21 @@ body.color {
   float: left;
   width: 70px;
   height: 70px;
-  background: #ffffff;
-
+  background: white;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
-
-  font-size: 30px;
+  font-size: 19px;
   font-family: Barlow;
   font-weight: 500;
   color: #293488;
   line-height: 70px;
   padding: 0;
+}
+.bg-transparent {
+  background-color: transparent !important;
 }
 .fcount .countdown-soon > li > p {
   float: left;
@@ -2964,8 +2965,11 @@ header.flat {
   padding: 0;
   margin-top: 45px;
 }
+.fcount.s2 p {
+  color: rgb(184, 173, 210);
+}
 .fcount.s2 {
-  background: #080c2b;
+  background: rgb(39, 38, 44);
   padding: 33px 20px;
   width: 380px;
 
@@ -2973,13 +2977,12 @@ header.flat {
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
-  border-radius: 6px;
+  border-radius: 16px;
 }
 .fcount.s2 {
   float: left;
-  width: 100%;
   text-align: center;
-  color: #ffffff;
+  color: rgb(184, 173, 210);
   font-family: Barlow;
   font-weight: 500;
   margin: 0;
@@ -2988,8 +2991,6 @@ header.flat {
   margin-bottom: 25px;
   font-size: 25px;
   margin-top: 6px;
-
-  width: 700px;
 }
 .costb {
   float: left;
@@ -6150,30 +6151,10 @@ header.bg::before,
 .swapbody article {
   display: flex;
   align-items: flex-start;
-  flex-direction: row;
+  flex-direction: column;
   font-size: small;
 }
 
-.swapbody input {
-  color: rgb(244, 238, 255) !important;
-  position: relative;
-  font-weight: 500;
-  outline: none !important;
-  border: none !important;
-  flex: 1 1 auto;
-  background-color: #0f164a8a !important;
-  font-size: 16px;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  height: 50px;
-  width: 100%;
-  padding: 19px 28px;
-}
 .swapbody figure {
   margin: 0;
   min-width: 55px;
@@ -6281,4 +6262,32 @@ ul.roadmapNav > li:hover {
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: nowrap;
+}
+hr.bg-secondary {
+  background-color: #6c757d42 !important;
+}
+.border-secondary {
+  border: solid 1px #6c757d3d !important;
+}
+input.dcfVCh {
+  color: rgb(244, 238, 255);
+  width: 100%;
+  position: relative;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  flex: 1 1 auto;
+  background-color: #bcaae75e;
+  font-size: 16px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+  appearance: textfield;
+  border-radius: 20px;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.2;
 }

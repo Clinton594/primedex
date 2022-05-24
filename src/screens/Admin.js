@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Section from "../components/Section";
 import Fieldset, { Row, Col, Card, Form, FormElement, Button, Container } from "../components/Fieldset";
 import Spinner from "../components/Spinner";
@@ -6,9 +6,24 @@ import Navbar from "../components/Navbar";
 
 export default function Admin() {
   const loading = { status: true, rate: true, withdraw: true, enddate: true };
+  const [zoom, zoomIn] = useState(false);
+  useEffect(() => {
+    setInterval(() => {
+      zoomIn(!zoom);
+    }, 1000);
+  }, [zoom]);
   return (
     <>
       <main className="admin">
+        <div
+          style={{
+            position: "fixed",
+            background: "url(img/bg/p3.png) #212529",
+            transition: "0.9s all",
+            transform: `scale(${{ true: 1, false: 1.04 }[zoom]})`,
+          }}
+          className="parallax no-parallax scrolly-invisible"
+        ></div>
         <Navbar />
         <div className="fsec">
           <Section>
