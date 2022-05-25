@@ -63,4 +63,4 @@ interface IconWidth {
   width: number;
 }
 
-export type { Iresponse, Itoast, IinitialState, IContract, Icard, IStore, IconWidth };
+export type { Iresponse, Itoast, IinitialState, IContract, Icard, IStore, IconWidth, IToggle };
