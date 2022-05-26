@@ -6,13 +6,13 @@ import Footer from "../components/Footer";
 import projectConfig from "../constants/project.config";
 
 export default function Presale() {
-  const [zoom, zoomIn] = useState(false);
+  const [zoom, zoomIn] = useState("shrink");
   useEffect(() => {
     setInterval(() => {
-      zoomIn(!zoom);
+      zoomIn(zoom === "shrink" ? "expand" : "shrink");
     }, 1000);
   }, [zoom]);
-  const date = "2022-06-09".split("-");
+  const date = "2022-06-09".split("-").map((x) => +x);
   return (
     <>
       <Navbar />

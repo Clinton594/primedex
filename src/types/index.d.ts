@@ -1,3 +1,5 @@
+import { JsxEmit } from "typescript";
+
 declare global {
   interface Array<T> {
     asyncForEach(callback: CallableFunction);
@@ -62,5 +64,33 @@ interface IStore {
 interface IconWidth {
   width: number;
 }
+interface IFieldSet {
+  title: string;
+  children: JSX.Element;
+  value: any;
+  isLoading: boolean;
+}
 
-export type { Iresponse, Itoast, IinitialState, IContract, Icard, IStore, IconWidth, IToggle };
+interface IFormElements {
+  className?: string;
+  name: string;
+  type: "text" | "number" | "checkbox" | "switch" | "date" | "input";
+  placeholder?: string;
+  disabled: boolean;
+  value: string;
+  label: string;
+  onChange?: ChangeEventHandler;
+}
+
+export type {
+  Iresponse,
+  Itoast,
+  IinitialState,
+  IContract,
+  Icard,
+  IStore,
+  IconWidth,
+  IToggle,
+  IFieldSet,
+  IFormElements,
+};

@@ -4,10 +4,17 @@ import Coinbase from "./icons/Coinbase";
 import Metamask from "./icons/Metamask";
 import TrustWallet from "./icons/TrustWallet";
 
-export default function WalletConnect({ showWallet, toggleWallet }) {
+export default function WalletConnect({
+  showWallet,
+  toggleWallet,
+}: {
+  showWallet: boolean;
+  toggleWallet: (a: boolean) => void;
+}) {
   const [slideShow, toggleSlide] = useState("");
   useEffect(() => {
-    toggleSlide(showWallet && "show");
+    const showing: "show" | "" = showWallet ? "show" : "";
+    toggleSlide(showing);
   }, [showWallet]);
   return (
     <>
@@ -22,27 +29,17 @@ export default function WalletConnect({ showWallet, toggleWallet }) {
           <div className="sc-e15886e2-0 sc-5d615fee-0 hesdMU krnGVC">
             <div className="sc-e15886e2-0 sc-f411e064-0 hXDauz itOzA-d">
               <div className="sc-e15886e2-0 hXDauz">
-                <button
-                  className="sc-e72add9e-0 dVLKgc sc-4a6a2b7-0 eIETMV"
-                  id="wallet-connect-metamask"
-                  width="100%"
-                  scale="md"
-                >
+                <button className="sc-e72add9e-0 dVLKgc sc-4a6a2b7-0 eIETMV" id="wallet-connect-metamask">
                   <Metamask width={40} />
-                  <div fontSize="14px" color="text" className="sc-bee979ae-0 hUBBoK">
+                  <div color="text" className="sc-bee979ae-0 hUBBoK">
                     Metamask
                   </div>
                 </button>
               </div>
               <div className="sc-e15886e2-0 hXDauz">
-                <button
-                  className="sc-e72add9e-0 dVLKgc sc-4a6a2b7-0 eIETMV"
-                  id="wallet-connect-binance wallet"
-                  width="100%"
-                  scale="md"
-                >
+                <button className="sc-e72add9e-0 dVLKgc sc-4a6a2b7-0 eIETMV" id="wallet-connect-binance wallet">
                   <Binance width={40} />
-                  <div fontSize="14px" color="text" className="sc-bee979ae-0 hUBBoK">
+                  <div color="text" className="sc-bee979ae-0 hUBBoK">
                     Binance Wallet
                   </div>
                 </button>
@@ -52,11 +49,9 @@ export default function WalletConnect({ showWallet, toggleWallet }) {
                   disabled={true}
                   className="sc-e72add9e-0 dVLKgc sc-4a6a2b7-0 eIETMV"
                   id="wallet-connect-coinbase wallet"
-                  width="100%"
-                  scale="md"
                 >
                   <Coinbase width={40} />
-                  <div fontSize="14px" color="text" className="sc-bee979ae-0 hUBBoK">
+                  <div color="text" className="sc-bee979ae-0 hUBBoK">
                     Coinbase Wallet
                   </div>
                 </button>
@@ -66,11 +61,9 @@ export default function WalletConnect({ showWallet, toggleWallet }) {
                   disabled={true}
                   className="sc-e72add9e-0 dVLKgc sc-4a6a2b7-0 eIETMV"
                   id="wallet-connect-trust wallet"
-                  width="100%"
-                  scale="md"
                 >
                   <TrustWallet width={40} />
-                  <div fontSize="14px" color="text" className="sc-bee979ae-0 hUBBoK">
+                  <div color="text" className="sc-bee979ae-0 hUBBoK">
                     Trust Wallet
                   </div>
                 </button>

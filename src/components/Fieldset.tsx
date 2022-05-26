@@ -1,7 +1,8 @@
 import React from "react";
+import { IFieldSet, IFormElements } from "../types";
 import Spinner from "./Spinner";
 
-export default function Fieldset({ title, children, value, isLoading }) {
+export default function Fieldset({ title, children, value, isLoading }: IFieldSet) {
   return (
     <fieldset>
       <legend>
@@ -12,29 +13,48 @@ export default function Fieldset({ title, children, value, isLoading }) {
   );
 }
 
-export const Row = ({ children }) => {
+export const Row = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
   return <div className="row">{children}</div>;
 };
 
-export const Col = ({ sm, md, lg, children }) => {
+export const Col = ({
+  sm,
+  md,
+  lg,
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+  sm?: string;
+  md?: string;
+  lg?: string;
+}) => {
   const val = sm || md || lg;
   const cls = sm !== undefined ? "sm" : md !== undefined ? "md" : "lg";
   return <div className={`col-${cls}-${val}`}>{children}</div>;
 };
 
-export const Card = ({ children }) => {
+export const Card = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
   return <div className="card">{children}</div>;
 };
 
-export const Form = ({ children }) => {
+export const Form = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
   return <form className="d-flex justify-content-between align-items-end w-100 p-4">{children}</form>;
 };
 
-export const FormElement = ({ className, name, type, placeholder, disabled, value, label, onChange }) => {
+export const FormElement = ({
+  className,
+  name,
+  type,
+  placeholder,
+  disabled,
+  value,
+  label,
+  onChange,
+}: IFormElements) => {
   return (
     <div className={`form-group ${className || ""}`}>
       <label htmlFor={name}>{label}</label>
-      <div className={type === "switch" && "switch"}>
+      <div className={type}>
         <input
           type={type === undefined ? "input" : type === "switch" ? "checkbox" : type}
           className="form-control px-4"
@@ -55,11 +75,21 @@ export const FormElement = ({ className, name, type, placeholder, disabled, valu
   );
 };
 
-export const Container = ({ children }) => {
+export const Container = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
   return <div className="container">{children}</div>;
 };
 
-export const Button = ({ children, disabled, variant, type }) => {
+export const Button = ({
+  children,
+  disabled,
+  variant,
+  type,
+}: {
+  children: JSX.Element | JSX.Element[];
+  disabled: boolean;
+  variant: string;
+  type: "button" | "submit" | "reset" | undefined;
+}) => {
   return (
     <button
       type={type}
