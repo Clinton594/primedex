@@ -10,8 +10,8 @@ const projectConfig = {
   blockChainTokan: "ETH",
   decimal: 18,
   status: {
-    ON: true,
-    OFF: false,
+    ON: "ON",
+    OFF: "OFF",
   },
 };
 

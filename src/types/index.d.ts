@@ -76,6 +76,7 @@ interface IFormElements {
   type: "text" | "number" | "checkbox" | "switch" | "date" | "input";
   placeholder?: string;
   disabled: boolean;
+  checked?: boolean;
   value: string;
   label: string;
   onChange?: ChangeEventHandler;

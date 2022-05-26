@@ -6293,4 +6293,5 @@ button:disabled {
 }
 .toast.show {
   z-index: 1000;
+  position: fixed;
 }

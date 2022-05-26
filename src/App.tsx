@@ -7,6 +7,7 @@ import Home from "./screens/Home";
 import Presale from "./screens/Presale";
 import routes from "./constants/routes";
 import Preloader from "./components/Preloader";
+import Protected from "./components/auth/Protected";
 
 export default function App() {
   const [showPreloader, togglePreloader] = useState(true);
@@ -23,7 +24,9 @@ export default function App() {
         <Routes>
           <Route path={routes.home} element={<Home />} />
           <Route path={routes.presale} element={<Presale />} />
-          <Route path={routes.admin} element={<Admin />} />
+          <Route path={routes.admin} element={<Protected />}>
+            <Route path={routes.admin} element={<Admin />} />
+          </Route>
           {/* <Route path={routes.notFound} element={<NotFound />} />  */}
         </Routes>
       </BrowserRouter>

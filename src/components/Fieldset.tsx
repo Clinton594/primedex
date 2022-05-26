@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import React, { FormEventHandler, MouseEventHandler } from "react";
 import { IFieldSet, IFormElements } from "../types";
 import Spinner from "./Spinner";
 
@@ -37,8 +37,18 @@ export const Card = ({ children }: { children: JSX.Element | JSX.Element[] }) =>
   return <div className="card">{children}</div>;
 };
 
-export const Form = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
-  return <form className="d-flex justify-content-between align-items-end w-100 p-4">{children}</form>;
+export const Form = ({
+  children,
+  onSubmit,
+}: {
+  onSubmit?: FormEventHandler;
+  children: JSX.Element | JSX.Element[];
+}) => {
+  return (
+    <form onSubmit={onSubmit} className="d-flex justify-content-between align-items-end w-100 p-4">
+      {children}
+    </form>
+  );
 };
 
 export const FormElement = ({
@@ -48,6 +58,7 @@ export const FormElement = ({
   placeholder,
   disabled,
   value,
+  checked,
   label,
   onChange,
 }: IFormElements) => {
@@ -60,6 +71,7 @@ export const FormElement = ({
           className="form-control px-4"
           id={name}
           name={name}
+          checked={checked}
           onChange={onChange}
           defaultValue={value || ""}
           placeholder={placeholder === undefined ? "" : placeholder}

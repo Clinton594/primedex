@@ -11,8 +11,19 @@ import Metamask from "./icons/Metamask";
 import routes from "../constants/routes";
 import WalletConnect from "./WalletConnect";
 import projectConfig from "../constants/project.config";
-import { connectToWallet, getContractInstance, injectProvider, toEther } from "../libraries/connectors";
+import {
+  connectToWallet,
+  getContractInstance,
+  getEndDate,
+  getPresaleStatus,
+  getRate,
+  getTokenSold,
+  getTotalContributors,
+  injectProvider,
+  toEther,
+} from "../libraries/connectors";
 import { setBalance, setConnection, setIsAdmin, setWallet, setWalletVisibility } from "../redux/presaleReducer";
+import { setAll } from "../redux/contractReducer";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -68,6 +79,26 @@ export default function Navbar() {
       if (persist) connectToWallet(activate, injectProvider, connector, () => {});
     }
   }, []);
+
+  // Update the redux state
+  useEffect(() => {
+    (async () => {
+      if (!active) dispatch(setIsAdmin(false));
+
+      let contractInstance = await getContractInstance(library, chainId, account);
+      const owner = await contractInstance.getOwner();
+      const card = {
+        tokenSold: await getTokenSold(contractInstance),
+        totalContributors: await getTotalContributors(contractInstance),
+        enddate: await getEndDate(contractInstance),
+        status: await getPresaleStatus(contractInstance),
+        rate: await getRate(contractInstance),
+      };
+
+      dispatch(setAll(card));
+      dispatch(setIsAdmin(account === owner));
+    })();
+  }, [active]);
   return (
     <header className="sticktop">
       <div className="menusec">

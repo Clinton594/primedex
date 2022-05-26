@@ -33,7 +33,7 @@ export const toggleStatus = async (web3: any, callback: Function) => {
         status,
         toast: {
           ...errocode,
-          message: `Successfuly turned ${toggle[status]}`,
+          message: `Successfuly turned ${toggle[status ? "ON" : "OFF"]}`,
           title: "Presale Status",
           status,
         },

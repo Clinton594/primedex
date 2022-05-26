@@ -3,10 +3,68 @@ import Section from "../components/Section";
 import Fieldset, { Row, Col, Card, Form, FormElement, Button, Container } from "../components/Fieldset";
 import Spinner from "../components/Spinner";
 import Navbar from "../components/Navbar";
+import { defaultState, submitEndDate, submitTokenRate, toggleStatus } from "../libraries/adminEvents";
+import { useDispatch, useSelector } from "react-redux";
+import { useWeb3React } from "@web3-react/core";
+import { Iresponse, IStore } from "../types";
+import projectConfig from "../constants/project.config";
+import { setEnddate, setRate, setStatus } from "../redux/contractReducer";
+import { setToast } from "../redux/statusReducer";
+import Toaster from "../components/Toaster";
+import { num_format } from "../libraries/utils";
+import Footer from "../components/Footer";
 
 export default function Admin() {
-  const loading = { status: true, rate: true, withdraw: true, enddate: true };
+  const [loading, toggleLoading] = useState(defaultState);
+  const dispatch = useDispatch();
+  const web3 = useWeb3React();
+  const { presale, contract, status } = useSelector((store: IStore) => store);
 
+  const triggerToggleStatus = () => {
+    toggleLoading({ ...loading, status: true }); //start loading circle
+    toggleStatus(web3, ({ status, toast }: Iresponse) => {
+      dispatch(setStatus(status)); // update the reducer
+      toggleLoading({ ...loading, status: false }); // stop the loading circle
+      dispatch(setToast(toast)); //toast the response
+    });
+  };
+
+  const triggerSetRate = (e: any) => {
+    e.preventDefault();
+    const val = e.target[0].value;
+
+    toggleLoading({ ...loading, rate: true }); //start loading circle
+    submitTokenRate(web3, val, ({ status, toast, data }: Iresponse) => {
+      if (status) {
+        dispatch(setRate(data));
+        e.target[0].value = "";
+      }
+      toggleLoading({ ...loading, rate: false }); // stop the loading circle
+      dispatch(setToast(toast)); //toast the response
+    });
+  };
+
+  const triggerEnddate = (e: any) => {
+    e.preventDefault();
+    const val = e.target[0].value;
+
+    toggleLoading({ ...loading, enddate: true }); //start loading circle
+    submitEndDate(web3, val, ({ status, toast, data }: Iresponse) => {
+      if (status) {
+        dispatch(setEnddate(data));
+        e.target[0].value = "";
+      }
+      toggleLoading({ ...loading, enddate: false }); // stop the loading circle
+      dispatch(setToast(toast)); //toast the response
+    });
+  };
+
+  const triggerWithdraw = (e: any) => {
+    e.preventDefault();
+    const val = e.target[0].value;
+
+    toggleLoading({ ...loading, withdraw: true }); //start loading circle
+  };
   return (
     <>
       <main className="admin">
@@ -19,6 +77,7 @@ export default function Admin() {
           className="parallax no-parallax scrolly-invisible breathing"
         ></div>
         <Navbar />
+        <Toaster />
         <div className="fsec">
           <Section>
             <Container>
@@ -26,14 +85,16 @@ export default function Admin() {
                 <>
                   <Col md="6">
                     <Card>
-                      <Fieldset title="Status" value={true} isLoading={loading.status}>
+                      <Fieldset title="Status" value={contract.status ? "ON" : "OFF"} isLoading={loading.status}>
                         <Form>
                           <FormElement
                             name="status"
                             type="switch"
+                            onChange={triggerToggleStatus}
+                            checked={contract.status}
                             value=""
-                            disabled={false}
-                            label="Turn on the presale"
+                            disabled={loading.status}
+                            label={`Turn ${projectConfig.status[contract.status ? "OFF" : "ON"]} the presale`}
                           />
                         </Form>
                       </Fieldset>
@@ -41,8 +102,8 @@ export default function Admin() {
                   </Col>
                   <Col md="6">
                     <Card>
-                      <Fieldset title="Rate" value="10,000" isLoading={loading.rate}>
-                        <Form>
+                      <Fieldset title="Rate" value={num_format(contract.rate)} isLoading={loading.rate}>
+                        <Form onSubmit={triggerSetRate}>
                           <>
                             <FormElement
                               label="Enter the presale rate"
@@ -53,7 +114,7 @@ export default function Admin() {
                               disabled={false}
                             />
                             <Button disabled={loading.rate} variant="danger" type="submit">
-                              <>Withdraw {loading.rate && <Spinner animation="border" size="sm" variant="warning" />}</>
+                              <>Submit {loading.rate && <Spinner animation="border" size="sm" variant="warning" />}</>
                             </Button>
                           </>
                         </Form>
@@ -70,8 +131,8 @@ export default function Admin() {
             <Row>
               <Col md="6">
                 <Card>
-                  <Fieldset title="Balance" value="" isLoading={loading.withdraw}>
-                    <Form>
+                  <Fieldset title="Balance" value="---" isLoading={loading.withdraw}>
+                    <Form onSubmit={triggerWithdraw}>
                       <>
                         <FormElement
                           label="Withdraw all available balance"
@@ -91,8 +152,8 @@ export default function Admin() {
               </Col>
               <Col md="6">
                 <Card>
-                  <Fieldset title="Presale Ends" value="" isLoading={loading.enddate}>
-                    <Form>
+                  <Fieldset title="Presale Ends" value={contract.enddate} isLoading={loading.enddate}>
+                    <Form onSubmit={triggerEnddate}>
                       <>
                         <FormElement
                           label="Update presale end date"
@@ -102,7 +163,7 @@ export default function Admin() {
                           disabled={false}
                         />
                         <Button disabled={loading.enddate} variant="danger" type="submit">
-                          <>Withdraw {loading.enddate && <Spinner animation="border" size="sm" variant="warning" />}</>
+                          <>Modify {loading.enddate && <Spinner animation="border" size="sm" variant="warning" />}</>
                         </Button>
                       </>
                     </Form>
@@ -112,6 +173,7 @@ export default function Admin() {
             </Row>
           </Container>
         </Section>
+        <Footer />
       </main>
     </>
   );

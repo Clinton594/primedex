@@ -18,16 +18,20 @@ export default function Toaster() {
     }
   }, [toast.show]);
   return (
-    <div
-      className={`toast ${show} bg-${variant}`}
-      onClose={() => dispatch(setToast(defaultStatus))}
-      style={{ position: "absolute", right: 10, top: 10 }}
-    >
-      <div className="toast-header">
-        <i className={`fa fa-${icon} mr-2`}></i>
-        <strong className="me-auto">{toast.title}</strong>
-      </div>
-      <div className="toast-body">{toast.message}</div>
-    </div>
+    <>
+      {toast.show && (
+        <div
+          className={`toast ${show} bg-${variant}`}
+          onClose={() => dispatch(setToast(defaultStatus))}
+          style={{ position: "absolute", right: 10, top: 10 }}
+        >
+          <div className="toast-header">
+            <i className={`fa fa-${icon} mr-2`}></i>
+            <strong className="me-auto">{toast.title}</strong>
+          </div>
+          <div className="toast-body">{toast.message}</div>
+        </div>
+      )}
+    </>
   );
 }
