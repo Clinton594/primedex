@@ -10,11 +10,6 @@ export default function Banner() {
   useEffect(() => {
     $(window).on("scroll", function () {
       const scroll = $(window).scrollTop() || 0;
-      if (scroll && scroll >= 50) {
-        $("header").addClass("sticky");
-      } else {
-        $("header").removeClass("sticky");
-      }
       setScroll(scroll / 10);
     });
   }, [scroller]);

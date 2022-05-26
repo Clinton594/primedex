@@ -1,7 +1,5 @@
-import { JsxEmit } from "typescript";
-
 declare global {
-  interface Array<T> {
+  interface Array<> {
     asyncForEach(callback: CallableFunction);
     chunk(a: number);
   }
@@ -31,6 +29,7 @@ interface IinitialState {
   loading: boolean;
   balance: number;
   isConnected: boolean;
+  isConnecting: boolean;
   walletIsVisible: boolean;
   chainId: number;
   isAdmin: boolean;
@@ -82,7 +81,10 @@ interface IFormElements {
   onChange?: ChangeEventHandler;
 }
 
+type emptyableString = string | null | undefined;
+
 export type {
+  emptyableString,
   Iresponse,
   Itoast,
   IinitialState,

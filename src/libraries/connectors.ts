@@ -3,8 +3,9 @@ import { ethers } from "ethers";
 import presale from "../contracts/Presale.json";
 import networks from "../constants/networks";
 import projectConfig from "../constants/project.config";
+import { emptyableString } from "../types";
 
-export const getContractInstance = async (provider: any, chainID: number, account: string | undefined) => {
+export const getContractInstance = async (provider: any, chainID: number | undefined, account: emptyableString) => {
   // If connected to a wallet
   let signer: any;
   if (typeof account === "string") {
@@ -34,7 +35,7 @@ export const connectToWallet = async (activate: Function, provider: any, connect
   }
 };
 
-export const injectProvider = new InjectedConnector({ supportedChainIds: Object.keys(networks).map((x) => +x) });
+export const injectProvider = new InjectedConnector({ supportedChainIds: networks.map((x) => x.chainId) });
 
 export const toTimestamp = (strDate: string): number => Date.parse(strDate) / 1000;
 

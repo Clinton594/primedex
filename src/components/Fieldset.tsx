@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { IFieldSet, IFormElements } from "../types";
 import Spinner from "./Spinner";
 
@@ -84,16 +84,22 @@ export const Button = ({
   disabled,
   variant,
   type,
+  onClick,
+  className,
 }: {
   children: JSX.Element | JSX.Element[];
-  disabled: boolean;
+  disabled?: boolean;
   variant: string;
+  className?: string;
   type: "button" | "submit" | "reset" | undefined;
+  onClick?: MouseEventHandler;
 }) => {
+  className = typeof className === "undefined" ? "mb-3" : className;
   return (
     <button
+      onClick={onClick}
       type={type}
-      className={`btn btn-${variant} d-flex mb-3`}
+      className={`btn btn-${variant} d-flex ${className}`}
       disabled={disabled === undefined ? false : disabled}
     >
       {children}

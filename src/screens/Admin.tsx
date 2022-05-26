@@ -6,12 +6,7 @@ import Navbar from "../components/Navbar";
 
 export default function Admin() {
   const loading = { status: true, rate: true, withdraw: true, enddate: true };
-  const [zoom, zoomIn] = useState("shrink");
-  useEffect(() => {
-    setInterval(() => {
-      zoomIn(zoom === "shrink" ? "expand" : "shrink");
-    }, 1000);
-  }, [zoom]);
+
   return (
     <>
       <main className="admin">
@@ -20,9 +15,8 @@ export default function Admin() {
             position: "fixed",
             background: "url(img/bg/p3.png) #212529",
             transition: "0.9s all",
-            transform: `scale(${{ shrink: 1, expand: 1.04 }[zoom]})`,
           }}
-          className="parallax no-parallax scrolly-invisible"
+          className="parallax no-parallax scrolly-invisible breathing"
         ></div>
         <Navbar />
         <div className="fsec">

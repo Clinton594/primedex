@@ -8,6 +8,7 @@ const initialState: IinitialState = {
   chainId: 0,
   wallet: "",
   isConnected: true,
+  isConnecting: false,
   isAdmin: true,
 };
 
@@ -24,6 +25,9 @@ const presaleSlice: Slice = createSlice({
     setConnection: (state: IinitialState, { payload }) => {
       state.isConnected = payload;
     },
+    setConnecting: (state: IinitialState, { payload }) => {
+      state.isConnecting = payload;
+    },
     setBalance: (state: IinitialState, { payload }) => {
       state.balance = payload;
     },
@@ -36,6 +40,6 @@ const presaleSlice: Slice = createSlice({
   },
 });
 
-export const { setWallet, setConnection, setBalance, setChainId, setWalletVisibility, setIsAdmin } =
+export const { setWallet, setConnection, setBalance, setChainId, setWalletVisibility, setIsAdmin, setConnecting } =
   presaleSlice.actions;
 export default presaleSlice.reducer;

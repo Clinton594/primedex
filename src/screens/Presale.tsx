@@ -4,18 +4,17 @@ import ScrollAnimation from "react-animate-on-scroll";
 import Countdown from "react-countdown";
 import Footer from "../components/Footer";
 import projectConfig from "../constants/project.config";
+import Toaster from "../components/Toaster";
+import { useSelector } from "react-redux";
+import { IStore } from "../types";
 
 export default function Presale() {
-  const [zoom, zoomIn] = useState("shrink");
-  useEffect(() => {
-    setInterval(() => {
-      zoomIn(zoom === "shrink" ? "expand" : "shrink");
-    }, 1000);
-  }, [zoom]);
   const date = "2022-06-09".split("-").map((x) => +x);
+  const { presale } = useSelector((store: IStore) => store);
   return (
     <>
       <Navbar />
+      <Toaster />
       <section>
         <div className="block sliceimg">
           <div
@@ -23,9 +22,8 @@ export default function Presale() {
               position: "fixed",
               background: "url(img/bg/p3.png) #212529",
               transition: "0.9s all",
-              transform: `scale(${{ true: 1, false: 1.04 }[zoom]})`,
             }}
-            className="parallax no-parallax scrolly-invisible"
+            className="parallax no-parallax scrolly-invisible breathing"
           ></div>
           <div className="container">
             <div className="row">
@@ -35,7 +33,7 @@ export default function Presale() {
                     className="d-flex align-items-center justify-content-center col-sm-12"
                     delay={1000}
                     animateIn="fadeIn"
-                    style={{ minHeight: "85vh" }}
+                    style={{ minHeight: "75vh" }}
                   >
                     <div className="shadow-lg fcount s2">
                       <div className="row">
@@ -81,11 +79,16 @@ export default function Presale() {
                               />
                               <hr className="bg-secondary" />
                             </article>
-                            <article>
-                              <button className="btn rounded w-100 btn-warning" title="">
-                                Purchase
-                              </button>
-                            </article>
+                            {presale.isConnected && (
+                              <article>
+                                <button className="btn rounded w-100 btn-warning" title="">
+                                  Purchase
+                                </button>
+                                <small className="badge mt-2 w-100 text-center">
+                                  <small>Connected to : {presale.wallet}</small>
+                                </small>
+                              </article>
+                            )}
                           </div>
                         </div>
                       </div>

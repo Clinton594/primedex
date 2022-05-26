@@ -1,16 +1,73 @@
+import $ from "jquery";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import WalletConnect from "./WalletConnect";
+import { useEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { useDispatch, useSelector } from "react-redux";
 
-import routes from "../constants/routes";
+import Spinner from "./Spinner";
+import { IStore } from "../types";
+import { Button } from "./Fieldset";
 import Metamask from "./icons/Metamask";
+import routes from "../constants/routes";
+import WalletConnect from "./WalletConnect";
+import projectConfig from "../constants/project.config";
+import { connectToWallet, getContractInstance, injectProvider, toEther } from "../libraries/connectors";
+import { setBalance, setConnection, setIsAdmin, setWallet, setWalletVisibility } from "../redux/presaleReducer";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const { presale } = useSelector((store: IStore) => store);
+  const { active, deactivate, activate, account, chainId, library, connector } = useWeb3React();
   const [showWallet, toggleWallet] = useState(false);
   const toggleNav = () => {
     $("nav").toggleClass("show");
   };
+  const toggleBalanceVisibility = () => {
+    dispatch(setWalletVisibility(!presale.walletIsVisible));
+  };
+  useEffect(() => {
+    dispatch(setConnection(active));
+    dispatch(setWallet(account));
 
+    if (library !== undefined) {
+      library.getBalance(account).then((balance: number) => {
+        const formattedBalance: number = toEther(balance);
+        dispatch(setBalance(formattedBalance));
+      });
+    } else {
+      dispatch(setBalance(0));
+    }
+
+    if (active) {
+      (async () => {
+        const contract = await getContractInstance(library, chainId, account);
+        const owner = await contract.getOwner();
+        dispatch(setIsAdmin(owner === account));
+      })();
+    } else {
+      dispatch(setIsAdmin(false));
+    }
+  }, [active, account, dispatch]);
+
+  useEffect(() => {
+    $(window).on("scroll", function () {
+      const scroll = $(window).scrollTop() || 0;
+      if (scroll && scroll >= 50) {
+        $("header").addClass("sticky");
+      } else {
+        $("header").removeClass("sticky");
+      }
+    });
+  }, []);
+
+  // Autoconnect
+  useEffect(() => {
+    let persist = localStorage.getItem("persist");
+    if (persist !== null) {
+      persist = JSON.parse(persist);
+      if (persist) connectToWallet(activate, injectProvider, connector, () => {});
+    }
+  }, []);
   return (
     <header className="sticktop">
       <div className="menusec">
@@ -23,7 +80,7 @@ export default function Navbar() {
             </span>
           </Link>
         </div>
-        <div className="apps-btns">
+        <div className="apps-btns  d-flex align-items-center">
           {window.location.pathname === routes.home && (
             <>
               <a
@@ -40,18 +97,50 @@ export default function Navbar() {
               </Link>
             </>
           )}
+          {/* DISPLAY ONLY ON PRESALE AND ADMIN PAGES */}
           {(window.location.pathname === routes.presale || window.location.pathname === routes.admin) && (
-            <a
-              onClick={(e) => {
-                e.preventDefault();
-                toggleWallet(!showWallet);
-              }}
-              href="!#"
-              className="g2 bg-danger text-white d-flex"
-            >
-              <Metamask width={20} />
-              Connect <span className="ml-2 d-none d-lg-block">Wallet</span>
-            </a>
+            <>
+              {presale.balance > 0 && (
+                <div className="d-none d-lg-block">
+                  <Button type="button" className="mb-0" onClick={toggleBalanceVisibility} variant="success">
+                    <>
+                      {presale.walletIsVisible === true && (
+                        <>
+                          <small>
+                            {presale.balance} {projectConfig.blockChainTokan}
+                          </small>
+                          <i className="fas fa-eye-slash ms-2"></i>
+                        </>
+                      )}
+                      {!presale.walletIsVisible && <i className="fas fa-eye ms-2"></i>}
+                    </>
+                  </Button>
+                </div>
+              )}
+              <div className="vr bg-white"></div>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!presale.isConnected) {
+                    toggleWallet(!showWallet);
+                  } else {
+                    deactivate();
+                    localStorage.setItem("persist", "false");
+                  }
+                }}
+                href="!#"
+                className={`${presale.isConnected ? `bg-danger` : `bg-info`} text-white d-flex align-items-center`}
+              >
+                {presale.isConnected ? (
+                  <i className="fas fa-ban mr-2"></i>
+                ) : presale.isConnecting ? (
+                  <Spinner variant="info" size="sm" className="mr-2" animation="grow" />
+                ) : (
+                  <Metamask width={20} />
+                )}
+                {presale.isConnected ? "Disconnect" : "Connect"} <span className="ml-2 d-none d-lg-block">Wallet</span>
+              </a>
+            </>
           )}
         </div>
         {window.location.pathname === routes.home && (
