@@ -7,10 +7,32 @@ import projectConfig from "../constants/project.config";
 import Toaster from "../components/Toaster";
 import { useSelector } from "react-redux";
 import { IStore } from "../types";
+import { debounce, num_format } from "../libraries/utils";
+import { useWeb3React } from "@web3-react/core";
+import { buyToken, getContractInstance, getTokenQty } from "../libraries/connectors";
 
 export default function Presale() {
-  const date = "2022-06-09".split("-").map((x) => +x);
-  const { presale } = useSelector((store: IStore) => store);
+  const [formdata, setFormdata] = useState({ token: 0.0, crypto: 0.0 });
+  const { presale, contract } = useSelector((store: IStore) => store);
+  const { active, library, chainId, account } = useWeb3React();
+
+  const date = contract.enddate.split("-").map((x: string) => +x);
+
+  const getTokenQuantity = debounce(async (e: any) => {
+    const response = await getTokenQty(library, chainId, account, e.target.value);
+    const token = response.toString();
+    setFormdata({ token, crypto: e.target.value });
+  });
+
+  const sumbmitBuyToken = async (e: any) => {
+    e.preventDefault();
+    if (typeof account === "string") {
+      const contract = await getContractInstance(library, chainId, account);
+      const response = await buyToken(formdata.token, contract, account);
+      console.log(response);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -44,7 +66,7 @@ export default function Presale() {
                               <hr className="bg-secondary" />
                             </article>
                           </div>
-                          <div className="btns wow fadeIn swapbody" data-wow-delay="0.6s">
+                          <form onSubmit={sumbmitBuyToken} className="btns wow fadeIn swapbody" data-wow-delay="0.6s">
                             <article>
                               <figure>
                                 <img width={30} className="mr-2" src="/img/icons/bnb.png" alt="" />
@@ -52,9 +74,11 @@ export default function Presale() {
                               </figure>
                               <input
                                 type="number"
+                                step="0.05"
                                 className="me-auto mt-3 dcfVCh"
                                 placeholder={`Swap how many BNB ?`}
-                                defaultValue="0.00"
+                                defaultValue={formdata.crypto}
+                                onChange={getTokenQuantity}
                               />
                             </article>
                             <article className="d-flex">
@@ -71,11 +95,12 @@ export default function Presale() {
                                 <b>$GASP</b>
                               </figure>
                               <input
-                                type="text"
+                                style={{ fontSize: `small` }}
+                                type="input"
                                 className="me-auto mt-1 dcfVCh"
-                                defaultValue="0.00"
+                                value={num_format(formdata.token)}
                                 readOnly={true}
-                                placeholder={`You'll recieve Tokens`}
+                                placeholder={`${num_format(formdata.token)}`}
                               />
                               <hr className="bg-secondary" />
                             </article>
@@ -89,7 +114,7 @@ export default function Presale() {
                                 </small>
                               </article>
                             )}
-                          </div>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -109,25 +134,28 @@ export default function Presale() {
                         <Countdown
                           date={new Date(date[0], date[1], date[2])}
                           renderer={({ hours, minutes, seconds, days }) => (
-                            <ul className="countdown-soon wow fadeIn" data-wow-delay="0.4s">
-                              <li className="days-soon">
-                                <span className="days">{days}</span>
-                                <p className="days_ref">days</p>
-                              </li>
-                              <li className="hours-soon">
-                                <span className="hours">{hours}</span>
-                                <p className="hours_ref">hours</p>
-                              </li>
-                              <li className="minutes-soon">
-                                <span className="minutes">{minutes}</span>
-                                <p className="minutes_ref">minutes</p>
-                              </li>
-                              <li className="seconds-soon">
-                                <span className="seconds">{seconds}</span>
-                                <p className="seconds_ref">seconds</p>
-                              </li>
-                              <hr />
-                            </ul>
+                            <>
+                              <p>{contract.enddate}</p>
+                              <ul className="countdown-soon wow fadeIn" data-wow-delay="0.4s">
+                                <li className="days-soon">
+                                  <span className="days">{days}</span>
+                                  <p className="days_ref">days</p>
+                                </li>
+                                <li className="hours-soon">
+                                  <span className="hours">{hours}</span>
+                                  <p className="hours_ref">hours</p>
+                                </li>
+                                <li className="minutes-soon">
+                                  <span className="minutes">{minutes}</span>
+                                  <p className="minutes_ref">minutes</p>
+                                </li>
+                                <li className="seconds-soon">
+                                  <span className="seconds">{seconds}</span>
+                                  <p className="seconds_ref">seconds</p>
+                                </li>
+                                <hr />
+                              </ul>
+                            </>
                           )}
                         />
                         <div className="">

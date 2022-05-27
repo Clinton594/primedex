@@ -1,9 +1,9 @@
 //SPDX-License-Identifier:UNLICENSED
-pragma solidity ^0.8.12;
+pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "../node_modules/@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 /*
 togglePause - Pause the presale activities
@@ -30,6 +30,13 @@ contract Presale is Ownable {
 
     uint256 totalContributors = 0;
     mapping(address => uint256) contributors;
+
+    // struct Contribution {
+    //     uint256 time;
+    //     uint256 amount;
+    //     address account
+    // }
+    // Contribution[] constructions;
 
     constructor(
         uint256 _rate, //Qty of coin to swap for 1 wei or 1 Eth during the ICO
@@ -63,6 +70,14 @@ contract Presale is Ownable {
 
     function getTotalContributors() external view returns (uint256) {
         return totalContributors;
+    }
+
+    // function getTotalContributions() external view returns (uint256) {
+    //     return constructions;
+    // }
+
+    function getUserContribution() external view returns (uint256) {
+        return contributors[msg.sender];
     }
 
     function getEndate() external view returns (uint256) {
@@ -147,6 +162,7 @@ contract Presale is Ownable {
         totalReceived = totalReceived.add(msg.value);
         contributors[msg.sender] = contributors[msg.sender].add(msg.value);
         totalContributors.add(1);
+        // constructions.push(Contribution(block.timestamp, msg.value, msg.sender));
     }
 
     function getTokensPerEth(uint256 weiVal) public view returns (uint256) {

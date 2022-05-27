@@ -36,6 +36,8 @@ export default function Navbar() {
   const toggleBalanceVisibility = () => {
     dispatch(setWalletVisibility(!presale.walletIsVisible));
   };
+
+  // Get the wallet owner
   useEffect(() => {
     dispatch(setConnection(active));
     dispatch(setWallet(account));
@@ -58,7 +60,7 @@ export default function Navbar() {
     } else {
       dispatch(setIsAdmin(false));
     }
-  }, [active, account, dispatch]);
+  }, [active, account, dispatch, chainId, library]);
 
   useEffect(() => {
     $(window).on("scroll", function () {
@@ -78,7 +80,7 @@ export default function Navbar() {
       persist = JSON.parse(persist);
       if (persist) connectToWallet(activate, injectProvider, connector, () => {});
     }
-  }, []);
+  }, [activate, connector]);
 
   // Update the redux state
   useEffect(() => {
@@ -98,7 +100,7 @@ export default function Navbar() {
       dispatch(setAll(card));
       dispatch(setIsAdmin(account === owner));
     })();
-  }, [active]);
+  }, [active, account, chainId, library, dispatch]);
   return (
     <header className="sticktop">
       <div className="menusec">

@@ -22,6 +22,12 @@ interface Iresponse {
   data: any | undefined;
   toast: Itoast;
 }
+interface BlockchainErrorResponse {
+  code: number;
+  data: { message: string; hash: null | string; reason: string; programCounter: number; result: string };
+  name: string;
+  stack: string;
+}
 
 // Initial state for Presale
 interface IinitialState {
@@ -96,4 +102,5 @@ export type {
   IToggle,
   IFieldSet,
   IFormElements,
+  BlockchainErrorResponse,
 };

@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import presale from "../contracts/Presale.json";
 import networks from "../constants/networks";
 import projectConfig from "../constants/project.config";
-import { emptyableString } from "../types";
+import { BlockchainErrorResponse, emptyableString } from "../types";
 
 export const getContractInstance = async (provider: any, chainID: number | undefined, account: emptyableString) => {
   // If connected to a wallet
@@ -94,8 +94,24 @@ export const getEndDate = async (contract: any) => {
   return date.toISOString().substr(0, 10);
 };
 
-export const getTokenQty = async (provider: any, chainId: number, account: string | undefined, eth: string) => {
+export const getTokenQty = async (
+  provider: any,
+  chainId: number | undefined,
+  account: string | null | undefined,
+  eth: string
+) => {
   const contractInstance = await getContractInstance(provider, chainId, account);
   const wei = BigInt(parseFloat(eth) * 10 ** projectConfig.decimal);
   return await contractInstance.getTokensPerEth(wei);
+};
+
+export const buyToken = async (wei: number, contract: any, account: string) => {
+  try {
+    const result = await contract.buyToken({ from: account, value: wei });
+    return result.wait().then((response: any) => {
+      return response;
+    });
+  } catch ({ data }: any) {
+    return data;
+  }
 };

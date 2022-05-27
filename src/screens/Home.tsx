@@ -12,8 +12,8 @@ export default function Home() {
       <Navbar />
       <Banner />
       <Body />
-      <RoadMap />
-      <FAQ />
+      {/* <RoadMap />
+      <FAQ /> */}
       <Footer />
     </>
   );
