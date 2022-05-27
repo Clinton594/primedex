@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import presale from "../contracts/Presale.json";
 import networks from "../constants/networks";
 import projectConfig from "../constants/project.config";
-import { BlockchainErrorResponse, emptyableString } from "../types";
+import { emptyableString } from "../types";
 
 export const getContractInstance = async (provider: any, chainID: number | undefined, account: emptyableString) => {
   // If connected to a wallet
@@ -44,15 +44,15 @@ export const toEther = (number: number): number => {
   return Math.round(res * 1e4) / 1e4;
 };
 
-export const tokenToWei = (token: string) => {
-  const bigint = BigInt(10 ** projectConfig.decimal);
-  return ethers.BigNumber.from(bigint).div(token).toString();
-};
+// export const tokenToWei = (token: string) => {
+//   const bigint = BigInt(10 ** projectConfig.decimal);
+//   return ethers.BigNumber.from(bigint).div(token).toString();
+// };
 
-export const weiToToken = (wei: string) => {
-  const bigint = BigInt(10 ** projectConfig.decimal);
-  return ethers.BigNumber.from(bigint).div(wei).toString();
-};
+// export const weiToToken = (wei: string) => {
+//   const bigint = BigInt(10 ** projectConfig.decimal);
+//   return ethers.BigNumber.from(bigint).div(wei).toString();
+// };
 
 export const getTokenSold = async (contract: any) => {
   const result = await contract.getTotalReceived();
@@ -70,7 +70,12 @@ export const getPresaleStatus = (contract: any) => {
 
 export const getRate = async (contract: any) => {
   const result = await contract.getTokenRate();
-  return weiToToken(result);
+  return result.toString();
+};
+
+export const getMinMax = async (contract: any) => {
+  const result = await contract.getMinMax();
+  return result.toString();
 };
 
 export const toggleContractStatus = async (contract: any, account: string) => {

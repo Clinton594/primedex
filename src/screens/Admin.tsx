@@ -125,54 +125,95 @@ export default function Admin() {
               </Row>
             </Container>
           </Section>
+          <Section>
+            <Container>
+              <Row>
+                <Col md="6">
+                  <Card>
+                    <Fieldset title="Balance" value="---" isLoading={loading.withdraw}>
+                      <Form onSubmit={triggerWithdraw}>
+                        <>
+                          <FormElement
+                            label="Withdraw all available balance"
+                            placeholder="Enter you ERC20 Address here"
+                            name="withdraw"
+                            type="input"
+                            value=""
+                            disabled={false}
+                          />
+                          <Button disabled={loading.withdraw} variant="danger" type="submit">
+                            <>
+                              Withdraw {loading.withdraw && <Spinner animation="border" size="sm" variant="warning" />}
+                            </>
+                          </Button>
+                        </>
+                      </Form>
+                    </Fieldset>
+                  </Card>
+                </Col>
+                <Col md="6">
+                  <Card>
+                    <Fieldset title="Presale Ends" value={contract.enddate} isLoading={loading.enddate}>
+                      <Form onSubmit={triggerEnddate}>
+                        <>
+                          <FormElement
+                            label="Update presale end date"
+                            name="enddate"
+                            type="date"
+                            value=""
+                            disabled={false}
+                          />
+                          <Button disabled={loading.enddate} variant="danger" type="submit">
+                            <>Modify {loading.enddate && <Spinner animation="border" size="sm" variant="warning" />}</>
+                          </Button>
+                        </>
+                      </Form>
+                    </Fieldset>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          </Section>
+          <Section>
+            <Container>
+              <Row>
+                <Col md="6">
+                  <Card>
+                    <Fieldset
+                      title="Min & Max purchase"
+                      value={`(${contract.minPurchase})-(${contract.maxPurchase})`}
+                      isLoading={loading.minmax}
+                    >
+                      <Form onSubmit={triggerWithdraw}>
+                        <>
+                          <FormElement
+                            label="Min Purchase"
+                            placeholder="Enter Min Purchase"
+                            name="minvalue"
+                            type="number"
+                            value={contract.minPurchase}
+                            disabled={false}
+                          />
+                          <FormElement
+                            label="Max Purchase"
+                            placeholder="Enter Min Purchase"
+                            name="maxvalue"
+                            type="number"
+                            value={contract.maxPurchase}
+                            disabled={false}
+                          />
+                          <Button disabled={loading.minmax} variant="danger" type="submit">
+                            <>Set {loading.minmax && <Spinner animation="border" size="sm" variant="warning" />}</>
+                          </Button>
+                        </>
+                      </Form>
+                    </Fieldset>
+                  </Card>
+                </Col>
+              </Row>
+            </Container>
+          </Section>
         </div>
-        <Section>
-          <Container>
-            <Row>
-              <Col md="6">
-                <Card>
-                  <Fieldset title="Balance" value="---" isLoading={loading.withdraw}>
-                    <Form onSubmit={triggerWithdraw}>
-                      <>
-                        <FormElement
-                          label="Withdraw all available balance"
-                          placeholder="Enter you ERC20 Address here"
-                          name="withdraw"
-                          type="input"
-                          value=""
-                          disabled={false}
-                        />
-                        <Button disabled={loading.withdraw} variant="danger" type="submit">
-                          <>Withdraw {loading.withdraw && <Spinner animation="border" size="sm" variant="warning" />}</>
-                        </Button>
-                      </>
-                    </Form>
-                  </Fieldset>
-                </Card>
-              </Col>
-              <Col md="6">
-                <Card>
-                  <Fieldset title="Presale Ends" value={contract.enddate} isLoading={loading.enddate}>
-                    <Form onSubmit={triggerEnddate}>
-                      <>
-                        <FormElement
-                          label="Update presale end date"
-                          name="enddate"
-                          type="date"
-                          value=""
-                          disabled={false}
-                        />
-                        <Button disabled={loading.enddate} variant="danger" type="submit">
-                          <>Modify {loading.enddate && <Spinner animation="border" size="sm" variant="warning" />}</>
-                        </Button>
-                      </>
-                    </Form>
-                  </Fieldset>
-                </Card>
-              </Col>
-            </Row>
-          </Container>
-        </Section>
         <Footer />
       </main>
     </>

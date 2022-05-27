@@ -6,18 +6,18 @@ contract("Testing Two Contracts", (accounts) => {
   describe("TestToken Block", () => {
     let token, presale;
     beforeEach(async () => {
-      token = await Token.new("TestToken", "TTk", 3000);
-      presale = await Presale.new(100003, accounts[0], token.address);
+      token = await Token.new("TestToken", "TTk", 100000000);
+      presale = await Presale.new(10000, accounts[0], token.address);
     });
 
     it("Should have 3000 piceces", async () => {
       const totalSupply = await token.totalSupply();
-      expect(totalSupply.toString()).toBe("3000");
+      expect(totalSupply.toString()).toBe("100000000");
     });
 
-    it("Rate should be 100003", async () => {
+    it("Rate should be 10000", async () => {
       const rate = await presale.getTokenRate();
-      expect(rate.toString()).toBe("100003");
+      expect(rate.toString()).toBe("10000");
     });
 
     it("Presale is paused", async () => {
@@ -31,9 +31,14 @@ contract("Testing Two Contracts", (accounts) => {
       expect(presaleStatus).toBe(false);
     });
 
-    // it("Presale Should give me Correct eth Value", async () => {
-    //   const ethValue = await presale.getTokensPerEth("61473000");
-    //   expect(ethValue.toString()).toBe("614");
-    // });
+    it("Presale Should give me Correct eth Value", async () => {
+      const ethValue = await presale.getTokensPerEth("1000000000000000000");
+      expect(ethValue.toString()).toBe("10000");
+    });
+
+    it("Get min and max purchase value", async () => {
+      const ethValue = await presale.getMinMax();
+      expect(ethValue.toString()).toBe("100000000000000000,1000000000000000000");
+    });
   });
 });

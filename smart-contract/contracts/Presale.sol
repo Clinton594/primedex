@@ -25,8 +25,8 @@ contract Presale is Ownable {
 
     bool allowed;
     uint256 endate = block.timestamp + 7 days;
-    uint256 minPurchase = (10**9); //0.5 Eth/ETH
-    uint256 purchaseCap = (100 * 10**18); // 100 ETH/Eth
+    uint256 minPurchase = 0.1 ether; //0.1 Eth/ETH
+    uint256 purchaseCap = 1 ether; // 100 ETH/Eth
 
     uint256 totalContributors = 0;
     mapping(address => uint256) contributors;
@@ -98,6 +98,30 @@ contract Presale is Ownable {
         return rate;
     }
 
+    // Get Minimum and Maximum purchase
+    function getMinMax() external view returns (uint256[] memory) {
+        uint256[] memory minmax = new uint256[](2);
+        minmax[0] = minPurchase;
+        minmax[1] = purchaseCap;
+        return minmax;
+    }
+
+    // Set Minimum and Maximum purchase
+    function setMinMax(uint256 _minPurchase, uint256 _purchaseCap)
+        external
+        onlyOwner
+        notZero(_minPurchase)
+        notZero(_purchaseCap)
+    {
+        if (minPurchase != _minPurchase) {
+            minPurchase = _minPurchase;
+        }
+
+        if (purchaseCap != _purchaseCap) {
+            purchaseCap = _purchaseCap;
+        }
+    }
+
     // Get the status of the Presale
     function getStatus() external view returns (bool) {
         return allowed;
@@ -139,7 +163,7 @@ contract Presale is Ownable {
      */
     function buyToken() public payable {
         // Make sure presale is currently not paused
-        require(allowed == false, "Presale: Presale is paused");
+        require(allowed == true, "Presale: Presale is paused");
         // Must send more that minEth
         require(msg.value >= minPurchase, "Presale: Buy quantity is low");
         // Sender doesn't exceed maxCap
@@ -166,6 +190,6 @@ contract Presale is Ownable {
     }
 
     function getTokensPerEth(uint256 weiVal) public view returns (uint256) {
-        return weiVal.mul(rate).div(10**(uint256(18).sub(Token.decimals())));
+        return weiVal.mul(rate).div(1 ether);
     }
 }

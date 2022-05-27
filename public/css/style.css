@@ -6222,7 +6222,6 @@ fieldset > legend {
 
 .admin button {
   height: 40px;
-  min-width: 130px;
   justify-content: space-between;
   align-items: center;
 }

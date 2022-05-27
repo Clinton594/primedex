@@ -3,7 +3,6 @@ import {
   toggleContractStatus,
   getPresaleStatus,
   setContractRate,
-  tokenToWei,
   getRate,
   setEnddate,
   toTimestamp,
@@ -11,7 +10,7 @@ import {
 } from "./connectors";
 import projectConfig from "../constants/project.config";
 import { Itoast } from "../types";
-export const defaultState = { status: false, rate: false, withdraw: false, enddate: false };
+export const defaultState = { status: false, rate: false, withdraw: false, enddate: false, minmax: false };
 
 const errocode: Itoast = {
   loading: false,
@@ -48,12 +47,15 @@ export const toggleStatus = async (web3: any, callback: Function) => {
 };
 
 export const submitTokenRate = async (web3: any, rate: string, callback: Function) => {
-  const weiValue = tokenToWei(rate);
+  // const weiValue = tokenToWei(rate);
   const { library, chainId, account } = web3;
-
+  if (!rate) {
+    callback({ status: false, toast: { message: "Invalid rate value", status: true, title: "Presale Rate" } });
+    return;
+  }
   try {
     const contractInstance = await getContractInstance(library, chainId, account);
-    const response = await setContractRate(contractInstance, account, weiValue);
+    const response = await setContractRate(contractInstance, account, rate);
     response.wait().then(async () => {
       const data = await getRate(contractInstance);
       callback({

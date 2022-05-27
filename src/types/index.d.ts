@@ -47,6 +47,8 @@ interface IContract {
   rate: number;
   totalContributors: number;
   tokenSold: number;
+  minPurchase: number;
+  maxPurchase: number;
   contractBalance: number;
   enddate: string;
   contributorsList: object[];

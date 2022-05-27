@@ -15,6 +15,7 @@ import {
   connectToWallet,
   getContractInstance,
   getEndDate,
+  getMinMax,
   getPresaleStatus,
   getRate,
   getTokenSold,
@@ -96,6 +97,7 @@ export default function Navbar() {
         status: await getPresaleStatus(contractInstance),
         rate: await getRate(contractInstance),
       };
+      console.log(await getMinMax(contractInstance));
 
       dispatch(setAll(card));
       dispatch(setIsAdmin(account === owner));

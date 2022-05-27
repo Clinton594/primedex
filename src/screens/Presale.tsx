@@ -21,6 +21,7 @@ export default function Presale() {
   const getTokenQuantity = debounce(async (e: any) => {
     const response = await getTokenQty(library, chainId, account, e.target.value);
     const token = response.toString();
+
     setFormdata({ token, crypto: e.target.value });
   });
 
