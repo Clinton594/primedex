@@ -39,15 +39,14 @@ export const injectProvider = new InjectedConnector({ supportedChainIds: network
 
 export const toTimestamp = (strDate: string): number => Date.parse(strDate) / 1000;
 
-export const toEther = (number: number): number => {
-  const res: any = ethers.utils.formatEther(number);
+export const toEther = (wei: number): number => {
+  const res: any = ethers.utils.formatEther(wei);
   return Math.round(res * 1e4) / 1e4;
 };
 
-// export const tokenToWei = (token: string) => {
-//   const bigint = BigInt(10 ** projectConfig.decimal);
-//   return ethers.BigNumber.from(bigint).div(token).toString();
-// };
+export const toWei = (ether: number) => {
+  return ether * 10 ** projectConfig.decimal;
+};
 
 // export const weiToToken = (wei: string) => {
 //   const bigint = BigInt(10 ** projectConfig.decimal);
@@ -75,7 +74,11 @@ export const getRate = async (contract: any) => {
 
 export const getMinMax = async (contract: any) => {
   const result = await contract.getMinMax();
-  return result.toString();
+  const loads = result
+    .toString()
+    .split(",")
+    .map((x: string) => ethers.utils.formatEther(x.trim()));
+  return loads;
 };
 
 export const toggleContractStatus = async (contract: any, account: string) => {
@@ -108,15 +111,4 @@ export const getTokenQty = async (
   const contractInstance = await getContractInstance(provider, chainId, account);
   const wei = BigInt(parseFloat(eth) * 10 ** projectConfig.decimal);
   return await contractInstance.getTokensPerEth(wei);
-};
-
-export const buyToken = async (wei: number, contract: any, account: string) => {
-  try {
-    const result = await contract.buyToken({ from: account, value: wei });
-    return result.wait().then((response: any) => {
-      return response;
-    });
-  } catch ({ data }: any) {
-    return data;
-  }
 };

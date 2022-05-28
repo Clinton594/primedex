@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import routes from "../constants/routes";
 import { IStore } from "../types";
+import Socials from "./Socials";
 
 export default function Footer() {
   const { presale } = useSelector((store: IStore) => store);
@@ -28,6 +29,8 @@ export default function Footer() {
                 <Link to={route.url}>{route.title}</Link>
               </span>
             )}
+            |
+            <Socials />
           </div>
         </div>
       </section>

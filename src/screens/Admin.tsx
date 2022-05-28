@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
 import { Iresponse, IStore } from "../types";
 import projectConfig from "../constants/project.config";
-import { setEnddate, setRate, setStatus } from "../redux/contractReducer";
+import { setEnddate, setMinMaxState, setRate, setStatus } from "../redux/contractReducer";
 import { setToast } from "../redux/statusReducer";
 import Toaster from "../components/Toaster";
 import { num_format } from "../libraries/utils";
 import Footer from "../components/Footer";
+import { setMinMax } from "../libraries/adminEvents";
 
 export default function Admin() {
   const [loading, toggleLoading] = useState(defaultState);
@@ -23,7 +24,7 @@ export default function Admin() {
   const triggerToggleStatus = () => {
     toggleLoading({ ...loading, status: true }); //start loading circle
     toggleStatus(web3, ({ status, toast }: Iresponse) => {
-      dispatch(setStatus(status)); // update the reducer
+      toast.status && dispatch(setStatus(status)); // update the reducer
       toggleLoading({ ...loading, status: false }); // stop the loading circle
       dispatch(setToast(toast)); //toast the response
     });
@@ -64,6 +65,21 @@ export default function Admin() {
     const val = e.target[0].value;
 
     toggleLoading({ ...loading, withdraw: true }); //start loading circle
+  };
+
+  const triggerSetLimits = (e: any) => {
+    e.preventDefault();
+    const val = e.target[0].value;
+    const val2 = e.target[1].value;
+
+    toggleLoading({ ...loading, minmax: true }); //start loading circle
+    setMinMax(web3, [val, val2], ({ status, toast, data }: Iresponse) => {
+      if (status) {
+        dispatch(setMinMaxState(data));
+      }
+      dispatch(setToast(toast)); //toast the response
+      toggleLoading({ ...loading, minmax: false }); // stop the loading circle
+    });
   };
   return (
     <>
@@ -111,7 +127,8 @@ export default function Admin() {
                               name="rate"
                               type="number"
                               value=""
-                              disabled={false}
+                              disabled={loading.rate}
+                              required={true}
                             />
                             <Button disabled={loading.rate} variant="danger" type="submit">
                               <>Submit {loading.rate && <Spinner animation="border" size="sm" variant="warning" />}</>
@@ -139,7 +156,8 @@ export default function Admin() {
                             name="withdraw"
                             type="input"
                             value=""
-                            disabled={false}
+                            disabled={loading.withdraw}
+                            required={true}
                           />
                           <Button disabled={loading.withdraw} variant="danger" type="submit">
                             <>
@@ -161,7 +179,8 @@ export default function Admin() {
                             name="enddate"
                             type="date"
                             value=""
-                            disabled={false}
+                            disabled={loading.enddate}
+                            required={true}
                           />
                           <Button disabled={loading.enddate} variant="danger" type="submit">
                             <>Modify {loading.enddate && <Spinner animation="border" size="sm" variant="warning" />}</>
@@ -180,11 +199,11 @@ export default function Admin() {
                 <Col md="6">
                   <Card>
                     <Fieldset
-                      title="Min & Max purchase"
-                      value={`(${contract.minPurchase})-(${contract.maxPurchase})`}
+                      title="Limits"
+                      value={`(${contract.minPurchase}) to (${contract.maxPurchase})`}
                       isLoading={loading.minmax}
                     >
-                      <Form onSubmit={triggerWithdraw}>
+                      <Form onSubmit={triggerSetLimits}>
                         <>
                           <FormElement
                             label="Min Purchase"
@@ -192,7 +211,10 @@ export default function Admin() {
                             name="minvalue"
                             type="number"
                             value={contract.minPurchase}
-                            disabled={false}
+                            disabled={loading.minmax}
+                            required={true}
+                            min={0.1}
+                            step={0.1}
                           />
                           <FormElement
                             label="Max Purchase"
@@ -200,7 +222,10 @@ export default function Admin() {
                             name="maxvalue"
                             type="number"
                             value={contract.maxPurchase}
-                            disabled={false}
+                            disabled={loading.minmax}
+                            required={true}
+                            min={0.1}
+                            step={0.1}
                           />
                           <Button disabled={loading.minmax} variant="danger" type="submit">
                             <>Set {loading.minmax && <Spinner animation="border" size="sm" variant="warning" />}</>

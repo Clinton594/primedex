@@ -344,6 +344,10 @@
 }
 
 @media (max-width: 980px) {
+  .row.flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
   video {
     width: unset;
     height: 100%;

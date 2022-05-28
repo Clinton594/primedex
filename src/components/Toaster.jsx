@@ -16,14 +16,14 @@ export default function Toaster() {
         dispatch(setToast(defaultStatus));
       }, 3000);
     }
-  }, [toast.show]);
+  }, [toast.show, dispatch]);
   return (
     <>
       {toast.show && (
         <div
           className={`toast ${show} bg-${variant}`}
           onClose={() => dispatch(setToast(defaultStatus))}
-          style={{ position: "absolute", right: 10, top: 10 }}
+          style={{ position: "fixed", right: 10, top: 10 }}
         >
           <div className="toast-header">
             <i className={`fa fa-${icon} mr-2`}></i>

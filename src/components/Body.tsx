@@ -36,7 +36,7 @@ export default function Body() {
                   <div className="tokenfesec mt-5">
                     <div className="row flow">
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.2s"
                         style={{ visibility: "visible", animationDelay: "0.2s", animationName: "fadeIn" }}
                       >
@@ -50,7 +50,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.4s"
                         style={{ visibility: "visible", animationDelay: "0.4s", animationName: "fadeIn" }}
                       >
@@ -64,7 +64,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.6s"
                         style={{ visibility: "visible", animationDelay: "0.6s", animationName: "fadeIn" }}
                       >
@@ -78,7 +78,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.8s"
                         style={{ visibility: "visible", animationDelay: "0.8s", animationName: "fadeIn" }}
                       >
@@ -92,7 +92,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.1"
                         style={{ visibility: "visible", animationDelay: "0.1s", animationName: "fadeIn" }}
                       >
@@ -106,7 +106,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.12s"
                         style={{ visibility: "visible", animationDelay: "0.12s", animationName: "fadeIn" }}
                       >
@@ -120,7 +120,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.2s"
                         style={{ visibility: "visible", animationDelay: "0.2s", animationName: "fadeIn" }}
                       >
@@ -134,7 +134,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.6s"
                         style={{ visibility: "visible", animationDelay: "0.6s", animationName: "fadeIn" }}
                       >
@@ -148,7 +148,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.10s"
                         style={{ visibility: "visible", animationDelay: "0.10s", animationName: "fadeIn" }}
                       >
@@ -162,7 +162,7 @@ export default function Body() {
                         </div>
                       </div>
                       <div
-                        className="col-lg-2 col-md-4 col-sm-4 col-xs-12 wow fadeIn"
+                        className="col-lg-2 col-md-12 col-sm-12 col-xs-12 wow fadeIn"
                         data-wow-delay="0.12s"
                         style={{ visibility: "visible", animationDelay: "0.12s", animationName: "fadeIn" }}
                       >
@@ -193,7 +193,45 @@ export default function Body() {
                   <h3>Distribution Of Tokens</h3>
                   <div className="mt-5">
                     <ScrollAnimation className="flash" animateIn="slideInUp">
-                      <img className="breathing" width="60%" src="img/bg/distribution.png" alt="" />
+                      <div className="row">
+                        <div className="col-md-6">
+                          <figure className="d-flex justify-content-center">
+                            <img className="breathing w-75" src="img/bg/distribution.png" alt="" />
+                          </figure>
+                        </div>
+                        <div className="col-lg-6">
+                          <ScrollAnimation animateIn="slideInRight">
+                            <ul className="someblock">
+                              <li className=" wow fadeIn" data-wow-delay="0.6s">
+                                <span>Total Supply</span>
+                                <p>100M Token</p>
+                              </li>
+                              <li className=" wow fadeIn" data-wow-delay="0.8s">
+                                <span>Private Sale</span>
+                                <p>2% (2M Token)</p>
+                              </li>
+                              <li className=" wow fadeIn" data-wow-delay="0.10s">
+                                <span>Pre - Sale</span>
+                                <p>50% (50M Token)</p>
+                              </li>
+                              <li className=" wow fadeIn" data-wow-delay="0.10s">
+                                <span>Liquidity Staking</span>
+                                <p>40% (40M Token)</p>
+                              </li>
+                            </ul>
+                            <ul className="someblock">
+                              <li className=" wow fadeIn" data-wow-delay="0.6s">
+                                <span>Marketing & Promotion</span>
+                                <p>5% (5M Token)</p>
+                              </li>
+                              <li className=" wow fadeIn" data-wow-delay="0.10s">
+                                <span>Airdrop</span>
+                                <p>3% (3M Token)</p>
+                              </li>
+                            </ul>
+                          </ScrollAnimation>
+                        </div>
+                      </div>
                     </ScrollAnimation>
                   </div>
                 </div>
@@ -201,6 +239,7 @@ export default function Body() {
             </div>
           </div>
         </div>
+        <hr />
       </section>
     </>
   );

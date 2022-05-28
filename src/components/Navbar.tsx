@@ -24,7 +24,7 @@ import {
   toEther,
 } from "../libraries/connectors";
 import { setBalance, setConnection, setIsAdmin, setWallet, setWalletVisibility } from "../redux/presaleReducer";
-import { setAll } from "../redux/contractReducer";
+import { setAll, setMinMaxState } from "../redux/contractReducer";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -58,8 +58,6 @@ export default function Navbar() {
         const owner = await contract.getOwner();
         dispatch(setIsAdmin(owner === account));
       })();
-    } else {
-      dispatch(setIsAdmin(false));
     }
   }, [active, account, dispatch, chainId, library]);
 
@@ -86,8 +84,6 @@ export default function Navbar() {
   // Update the redux state
   useEffect(() => {
     (async () => {
-      if (!active) dispatch(setIsAdmin(false));
-
       let contractInstance = await getContractInstance(library, chainId, account);
       const owner = await contractInstance.getOwner();
       const card = {
@@ -97,10 +93,11 @@ export default function Navbar() {
         status: await getPresaleStatus(contractInstance),
         rate: await getRate(contractInstance),
       };
-      console.log(await getMinMax(contractInstance));
-
+      dispatch(setMinMaxState(await getMinMax(contractInstance)));
       dispatch(setAll(card));
-      dispatch(setIsAdmin(account === owner));
+      setTimeout(() => {
+        dispatch(setIsAdmin(account === owner));
+      }, 1000);
     })();
   }, [active, account, chainId, library, dispatch]);
   return (
@@ -115,15 +112,16 @@ export default function Navbar() {
             </span>
           </Link>
         </div>
-        <div className="apps-btns  d-flex align-items-center">
+        <div className="apps-btns  d-flex align-items-center justify-content-end">
           {window.location.pathname === routes.home && (
             <>
               <a
                 style={{ background: "#ffc107" }}
-                href="/GASP-Whitepaper.pdf"
                 className="g1 d-none d-lg-block"
-                title=""
+                title="White Paper"
+                href={projectConfig.whitepaper}
                 target="_blank"
+                rel="noreferrer"
               >
                 Whitepaper
               </a>
@@ -164,7 +162,7 @@ export default function Navbar() {
                   }
                 }}
                 href="!#"
-                className={`${presale.isConnected ? `bg-danger` : `bg-info`} text-white d-flex align-items-center`}
+                className={`${presale.isConnected ? `bg-danger` : `bg-info`} text-white d-flex  align-items-center`}
               >
                 {presale.isConnected ? (
                   <i className="fas fa-ban mr-2"></i>
@@ -209,13 +207,14 @@ export default function Navbar() {
                     FAQ
                   </a>
                 </li>
+                <li className="mobilap">
+                  <div className="apps-btns float-left">
+                    <Link to={routes.presale} className="g2 float-left" title="">
+                      Presale
+                    </Link>
+                  </div>
+                </li>
               </ul>
-
-              <div className="apps-btns mobilap">
-                <Link to={routes.presale} className="g2 float-left" title="">
-                  Presale
-                </Link>
-              </div>
             </nav>
           </>
         )}

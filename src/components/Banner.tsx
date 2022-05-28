@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import routes from "../constants/routes";
 import ScrollAnimation from "react-animate-on-scroll";
+import projectConfig from "../constants/project.config";
 
 export default function Banner() {
   const [scroller, setScroll] = useState(0);
@@ -53,7 +54,13 @@ export default function Banner() {
                       </Link>
                     </li>
                     <li>
-                      <Link to="#" download={true} className="theme-btn blank">
+                      <Link
+                        title="White Paper"
+                        to={projectConfig.whitepaper}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="theme-btn blank"
+                      >
                         Download White Paper
                       </Link>
                     </li>

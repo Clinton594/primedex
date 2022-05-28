@@ -9,7 +9,7 @@ const initialState: IinitialState = {
   wallet: "",
   isConnected: true,
   isConnecting: false,
-  isAdmin: true,
+  isAdmin: false,
 };
 
 const presaleSlice: Slice = createSlice({

@@ -9,7 +9,8 @@ import { useSelector } from "react-redux";
 import { IStore } from "../types";
 import { debounce, num_format } from "../libraries/utils";
 import { useWeb3React } from "@web3-react/core";
-import { buyToken, getContractInstance, getTokenQty } from "../libraries/connectors";
+import { getTokenQty } from "../libraries/connectors";
+import { buyToken } from "../libraries/adminEvents";
 
 export default function Presale() {
   const [formdata, setFormdata] = useState({ token: 0.0, crypto: 0.0 });
@@ -28,9 +29,9 @@ export default function Presale() {
   const sumbmitBuyToken = async (e: any) => {
     e.preventDefault();
     if (typeof account === "string") {
-      const contract = await getContractInstance(library, chainId, account);
-      const response = await buyToken(formdata.token, contract, account);
-      console.log(response);
+      buyToken(formdata.crypto, { active, library, chainId, account }, (response: any) => {
+        console.log(response);
+      });
     }
   };
 

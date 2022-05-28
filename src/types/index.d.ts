@@ -47,8 +47,8 @@ interface IContract {
   rate: number;
   totalContributors: number;
   tokenSold: number;
-  minPurchase: number;
-  maxPurchase: number;
+  minPurchase: string;
+  maxPurchase: string;
   contractBalance: number;
   enddate: string;
   contributorsList: object[];
@@ -84,9 +84,12 @@ interface IFormElements {
   type: "text" | "number" | "checkbox" | "switch" | "date" | "input";
   placeholder?: string;
   disabled: boolean;
+  required?: boolean;
   checked?: boolean;
   value: string;
   label: string;
+  min?: number;
+  step?: number | "any";
   onChange?: ChangeEventHandler;
 }
 

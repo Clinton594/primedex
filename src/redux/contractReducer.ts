@@ -6,8 +6,8 @@ const initialState: IContract = {
   rate: 0,
   totalContributors: 0,
   tokenSold: 0,
-  minPurchase: 0,
-  maxPurchase: 0,
+  minPurchase: "0",
+  maxPurchase: "0",
   contractBalance: 0,
   enddate: "2022-02-12",
   contributorsList: [],
@@ -32,9 +32,9 @@ const contractReducer = createSlice({
     setEnddate: (state: IContract, { payload }) => {
       state.enddate = payload;
     },
-    setMinMax: (state: IContract, { payload }) => {
-      state.minPurchase = payload.minPurchase;
-      state.maxPurchase = payload.maxPurchase;
+    setMinMaxState: (state: IContract, { payload: loads }) => {
+      state.minPurchase = loads[0];
+      state.maxPurchase = loads[1];
     },
     setContributors: (state: IContract, { payload }) => {
       state.contributorsList = payload;
@@ -50,6 +50,14 @@ const contractReducer = createSlice({
   },
 });
 
-export const { setStatus, setRate, setContractBalance, setEnddate, setContributors, setAll, setTokenSold, setMinMax } =
-  contractReducer.actions;
+export const {
+  setStatus,
+  setRate,
+  setContractBalance,
+  setEnddate,
+  setContributors,
+  setAll,
+  setTokenSold,
+  setMinMaxState,
+} = contractReducer.actions;
 export default contractReducer.reducer;

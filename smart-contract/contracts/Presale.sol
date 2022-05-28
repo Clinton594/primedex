@@ -174,8 +174,8 @@ contract Presale is Ownable {
         // Get token value
         uint256 tokenQuantity = getTokensPerEth(msg.value);
 
-        // Recieve the Ethereum into our wallet
-        payable(wallet).transfer(msg.value);
+        // // Recieve the Ethereum into our wallet
+        // payable(wallet).transfer(msg.value);
 
         // Pay the sender in our token
         require(

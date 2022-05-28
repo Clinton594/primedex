@@ -9,6 +9,7 @@ const projectConfig = {
   ticker: "$PrimeDEX",
   blockChainTokan: "ETH",
   decimal: 18,
+  whitepaper: "/pdf/white-paper.pdf",
   status: {
     ON: "ON",
     OFF: "OFF",

@@ -40,5 +40,11 @@ contract("Testing Two Contracts", (accounts) => {
       const ethValue = await presale.getMinMax();
       expect(ethValue.toString()).toBe("100000000000000000,1000000000000000000");
     });
+
+    it.only("Should return the equivalent token to be sent", async () => {
+      const result = await presale.testReturn({ from: accounts[0], value: "200000000000000000" });
+      console.log(result);
+      expect(result.toString()).toBe("2000");
+    });
   });
 });

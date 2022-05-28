@@ -6,6 +6,6 @@ import { IStore } from "../../types";
 
 export default function Protected() {
   const { presale } = useSelector((store: IStore) => store);
-  if (!presale.isAdmin) return <Navigate to={routes.home} />;
+  if (!presale.isAdmin) return <Navigate to={routes.presale} />;
   return <Outlet />;
 }

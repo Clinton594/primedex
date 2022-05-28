@@ -2971,7 +2971,7 @@ header.flat {
 .fcount.s2 {
   background: rgb(39, 38, 44);
   padding: 33px 20px;
-  width: 380px;
+  width: 580px;
 
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -3604,17 +3604,18 @@ header.sticky.nav-down {
   margin-top: 0px;
   margin-bottom: 0px;
   font-size: 22px;
-  color: #8488c0;
+  color: white;
   font-weight: normal;
   margin-top: 22px;
   font-family: Barlow;
   margin-bottom: 25px;
 }
-.ybox p {
+.ybox ul,
+.ybox li {
   float: left;
   width: 100%;
   font-size: 16px;
-  color: #443c62;
+  color: white;
   font-family: Barlow;
   margin: 0;
 }

@@ -61,6 +61,9 @@ export const FormElement = ({
   checked,
   label,
   onChange,
+  required,
+  min,
+  step,
 }: IFormElements) => {
   return (
     <div className={`form-group ${className || ""}`}>
@@ -69,10 +72,13 @@ export const FormElement = ({
         <input
           type={type === undefined ? "input" : type === "switch" ? "checkbox" : type}
           className="form-control px-4"
+          step={step}
+          min={min}
           id={name}
           name={name}
           checked={checked}
           onChange={onChange}
+          required={required}
           defaultValue={value || ""}
           placeholder={placeholder === undefined ? "" : placeholder}
           disabled={disabled === undefined ? false : disabled}

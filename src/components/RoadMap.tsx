@@ -1,173 +1,91 @@
 import React, { useState } from "react";
+import ScrollAnimation from "react-animate-on-scroll";
 
 export default function RoadMap() {
-  const [translate3d, setTranslate3d] = useState(0);
-  const toleft = () => {
-    translate3d >= -800 && setTranslate3d(translate3d - 100);
-  };
-  const toright = () => {
-    translate3d <= 0 && setTranslate3d(translate3d + 100);
-  };
-
   return (
-    <section id="roadmap" className="block">
+    <section>
       <div className="block remove-top">
-        <div className="container fluid">
+        <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <div className="roadmapsec color">
-                <h3>Road Map</h3>
-                <div className="container">
-                  <ul className="roadmapNav">
-                    <li>
-                      <span onClick={toleft}>
-                        <i className="fa fa-arrow-left"></i>
-                      </span>
-                    </li>
-                    <li>
-                      <span onClick={toright}>
-                        <i className="fa fa-arrow-right"></i>
-                      </span>
-                    </li>
-                  </ul>
-                  <ul className="roadcontent slick-initialized slick-slider">
-                    <div aria-live="polite" className="slick-list draggable">
-                      <div
-                        className="slick-track"
-                        role="listbox"
-                        style={{
-                          opacity: 1,
-                          width: "9457px",
-                          transform: `translate3d(${translate3d}px, 0px, 0px)`,
-                          transition: "0.4s all",
-                        }}
-                      >
-                        <li
-                          className="slick-slide"
-                          data-slick-index="2"
-                          aria-hidden="true"
-                          aria-describedby="slick-slide02"
-                          style={{ width: "1351px" }}
-                        >
-                          <div className="rmcontent">
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0s"
-                              style={{ visibility: "visible", animationDelay: "0s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl1"></i>
-                              <h3>(Q4, 2021)</h3>
-                              <ul>
-                                <li>Ideas developed</li>
-                                <li>Team formed</li>
-                              </ul>
-                            </div>
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.2s"
-                              style={{ visibility: "visible", animationDelay: "0.2s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl2"></i>
-                              <h3>(Q1, 2022)</h3>
-                              <ul>
-                                <li>Plans Begin</li>
-                                <li>Platform Developed</li>
-                              </ul>
-                            </div>
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.4s"
-                              style={{ visibility: "visible", animationDelay: "0.4s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl3"></i>
-                              <h3>(Q2, 2022)</h3>
-                              <ul>
-                                <li>Launching of GaraSwap Protocol</li>
-                                <li>Adverts and Airdrop Campaign</li>
-                                <li>Private Sale</li>
-                                <li>Pre-Sale</li>
-                              </ul>
-                            </div>
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.6s"
-                              style={{ visibility: "visible", animationDelay: "0.6s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl4"></i>
-                              <h3>(Q3, 2022)</h3>
-                              <ul>
-                                <li>Public Sales</li>
-                                <li>DEX listing of $GASP</li>
-                                <li>Coingecko and CoinMarketCap Listings</li>
-                              </ul>
-                            </div>
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.8s"
-                              style={{ visibility: "visible", animationDelay: "0.8s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl5"></i>
-                              <h3>(Q4, 2022)</h3>
-                              <ul>
-                                <li>Gara Swap DEX starts</li>
-                                <li>Launching of GaraSwap DEX web3.0 App</li>
-                                <li>Community Airdrop Distributions</li>
-                                <li>Listing of $GASP in 2nd Tier CEX Exchanges(e.g.Gate.io & Kucoin)</li>
-                              </ul>
-                            </div>
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.8s"
-                              style={{ visibility: "visible", animationDelay: "0.8s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl5"></i>
-                              <h3>(Q1, 2023)</h3>
-                              <ul>
-                                <li>Releasing of Lending Protocol Architectural Lite Paper V2.0</li>
-                                <li>GaraSwap Protocol Partnerships</li>
-                                <li>Cross-Chain Bridge Integrations</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </li>
-                        <li
-                          className="slick-slide"
-                          data-slick-index="2"
-                          aria-hidden="true"
-                          aria-describedby="slick-slide02"
-                          style={{ width: "1351px" }}
-                        >
-                          <div className="rmcontent d-flex">
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.8s"
-                              style={{ visibility: "visible", animationDelay: "0.8s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl5"></i>
-                              <h3>(Q2, 2023)</h3>
-                              <ul>
-                                <li>Metaverse NFT Games Partnerships</li>
-                                <li>Distribution of GaraUtility Card (GUC) cards</li>
-                              </ul>
-                            </div>
-                            <div
-                              className="roadmap wow fadeInUp"
-                              data-wow-delay="0.8s"
-                              style={{ visibility: "visible", animationDelay: "0.8s", animationName: "fadeInUp" }}
-                            >
-                              <i className="cl5"></i>
-                              <h3>(Q3, 2023)</h3>
-                              <ul>
-                                <li>Releasing of Gara-Walet</li>
-                                <li>Lending Protocol Launching</li>
-                                <li>Roadmap Updates (Roadmapv2)</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </li>
-                      </div>
-                    </div>
-                  </ul>
+              <div className="whyussec">
+                <div className="row">
+                  <div className="col-lg-12">
+                    <h3 className="t">Road Map</h3>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInLeft">
+                      <img width={50} src="/img/icons/idea-svgrepo-com.svg" alt="" />
+                      <h3>Q1 2022</h3>
+                      <ul>
+                        <li>Idea and team formed</li>
+                        <li>Platform developed</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInRight">
+                      <img width={50} src="/img/icons/launch-svgrepo-com.svg" alt="" />
+                      <h3>Q2 2022</h3>
+                      <ul>
+                        <li>Launch PrimeDex Project</li>
+                        <li>Build the PrimeDex Community</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInLeft">
+                      <img width={50} src="/img/icons/rain-svgrepo-com.svg" alt="" />
+                      <h3>Q3 2022</h3>
+                      <ul>
+                        <li>Launch the airdrop</li>
+                        <li>PrimeDex Starts</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInRight">
+                      <img width={50} src="/img/icons/exchange-svgrepo-com.svg" alt="" />
+                      <h3>Q4 2022</h3>
+                      <ul>
+                        <li>List on Pancakeswap, Coin marketCap, Coingecko</li>
+                        <li>PrimeDex Application Launch</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInLeft">
+                      <img width={50} src="/img/icons/nft-investiment-sign-non-token-svgrepo-com.svg" alt="" />
+                      <h3>Q1 2023</h3>
+                      <ul>
+                        <li>List PrimeDex Token on 4 big exchanges</li>
+                        <li>Vip Card distribution (NFTs)</li>
+                        <li>Bi-weekly Buy-Back Strategy Starts</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInRight">
+                      <img width={50} src="/img/icons/deal-done-partnership-agreement-svgrepo-com.svg" alt="" />
+                      <h3>Q2 2023</h3>
+                      <ul>
+                        <li>PrimeDex partnership program</li>
+                        <li>Enable primeDex CARD (NFT)</li>
+                        <li>Airdrop for primeDex CARD holders</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
+                  <div className="col-lg-3 col-md-6 col-sm-6">
+                    <ScrollAnimation className="ybox" animateIn="slideInLeft">
+                      <img width={50} src="/img/icons/puzzle-game-svgrepo-com.svg" alt="" />
+                      <h3>Q3 2023</h3>
+                      <ul>
+                        <li>PrimeDex Game Launch</li>
+                        <li>PrimeDex Trading Competition</li>
+                        <li>Cross Chain Wallet Network Launch</li>
+                      </ul>
+                    </ScrollAnimation>
+                  </div>
                 </div>
               </div>
             </div>
