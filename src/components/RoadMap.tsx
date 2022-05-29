@@ -3,7 +3,7 @@ import ScrollAnimation from "react-animate-on-scroll";
 
 export default function RoadMap() {
   return (
-    <section>
+    <section id="roadmap">
       <div className="block remove-top">
         <div className="container">
           <div className="row">

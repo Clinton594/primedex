@@ -29,6 +29,12 @@ interface BlockchainErrorResponse {
   stack: string;
 }
 
+interface ISale {
+  preSale: any;
+  privateSale: any;
+  all: any;
+}
+type keyOfISale = keyof ISale;
 // Initial state for Presale
 interface IinitialState {
   wallet: string;
@@ -39,6 +45,7 @@ interface IinitialState {
   walletIsVisible: boolean;
   chainId: number;
   isAdmin: boolean;
+  activeSale: keyOfISale;
 }
 
 // Admin contract
@@ -108,4 +115,6 @@ export type {
   IFieldSet,
   IFormElements,
   BlockchainErrorResponse,
+  ISale,
+  keyOfISale,
 };

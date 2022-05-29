@@ -10,6 +10,7 @@ const initialState: IinitialState = {
   isConnected: true,
   isConnecting: false,
   isAdmin: false,
+  activeSale: "preSale",
 };
 
 const presaleSlice: Slice = createSlice({

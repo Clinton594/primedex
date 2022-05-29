@@ -10,6 +10,20 @@ const projectConfig = {
   blockChainTokan: "ETH",
   decimal: 18,
   whitepaper: "/pdf/white-paper.pdf",
+  sale: {
+    privateSale: {
+      totalSupply: 100000000,
+    },
+    preSale: {
+      totalSupply: 50000000,
+    },
+    all: [
+      { name: "Purchase Via", value: "Our Website" },
+      { name: "Payment Accepted", value: "BNB Only" },
+      { name: "Soft Cap", value: "300 BNB" },
+      { name: "Hard Cap", value: "500 BNB" },
+    ],
+  },
   status: {
     ON: "ON",
     OFF: "OFF",

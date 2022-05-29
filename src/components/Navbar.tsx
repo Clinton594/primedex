@@ -43,6 +43,7 @@ export default function Navbar() {
     dispatch(setConnection(active));
     dispatch(setWallet(account));
 
+    // Get the account balance of the connected user
     if (library !== undefined) {
       library.getBalance(account).then((balance: number) => {
         const formattedBalance: number = toEther(balance);
@@ -51,16 +52,9 @@ export default function Navbar() {
     } else {
       dispatch(setBalance(0));
     }
+  }, [active, account]);
 
-    if (active) {
-      (async () => {
-        const contract = await getContractInstance(library, chainId, account);
-        const owner = await contract.getOwner();
-        dispatch(setIsAdmin(owner === account));
-      })();
-    }
-  }, [active, account, dispatch, chainId, library]);
-
+  // jQuery scroll effects
   useEffect(() => {
     $(window).on("scroll", function () {
       const scroll = $(window).scrollTop() || 0;
@@ -99,7 +93,7 @@ export default function Navbar() {
         dispatch(setIsAdmin(account === owner));
       }, 1000);
     })();
-  }, [active, account, chainId, library, dispatch]);
+  }, [account, chainId, library, dispatch]);
   return (
     <header className="sticktop">
       <div className="menusec">
@@ -115,17 +109,7 @@ export default function Navbar() {
         <div className="apps-btns  d-flex align-items-center justify-content-end">
           {window.location.pathname === routes.home && (
             <>
-              <a
-                style={{ background: "#ffc107" }}
-                className="g1 d-none d-lg-block"
-                title="White Paper"
-                href={projectConfig.whitepaper}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Whitepaper
-              </a>
-              <Link style={{ background: "#8500ff" }} to={routes.presale} className="g2 d-none d-lg-block">
+              <Link to={routes.presale} className="theme-btn px-5 py-2 gradient d-none d-lg-block">
                 PRESALE
               </Link>
             </>
@@ -202,11 +186,11 @@ export default function Navbar() {
                     ROAD MAP
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a className="smooth" href="#six" title="">
                     FAQ
                   </a>
-                </li>
+                </li> */}
                 <li className="mobilap">
                   <div className="apps-btns float-left">
                     <Link to={routes.presale} className="g2 float-left" title="">
