@@ -23,20 +23,20 @@ contract Presale is Ownable {
 
     uint256 totalReceived; // Total Eth/ETH Received
 
-    bool allowed;
-    uint256 endate = block.timestamp + 7 days;
-    uint256 minPurchase = 0.1 ether; //0.1 Eth/ETH
-    uint256 purchaseCap = 1 ether; // 100 ETH/Eth
+    bool private allowed = false;
+    uint256 private endate = block.timestamp + 7 days;
+    uint256 private minPurchase = 0.1 ether; //0.1 Eth/ETH
+    uint256 private purchaseCap = 100 ether; // 100 ETH/Eth
 
     uint256 totalContributors = 0;
+    uint256 private weiRaised = 0;
     mapping(address => uint256) contributors;
 
-    // struct Contribution {
-    //     uint256 time;
-    //     uint256 amount;
-    //     address account
-    // }
-    // Contribution[] constructions;
+    event TokensPurchased(
+        address indexed purchaser,
+        uint256 value,
+        uint256 amount
+    );
 
     constructor(
         uint256 _rate, //Qty of coin to swap for 1 wei or 1 Eth during the ICO
@@ -52,7 +52,6 @@ contract Presale is Ownable {
         rate = _rate;
         wallet = _wallet;
         Token = _token;
-        allowed = true;
     }
 
     modifier notZero(uint256 _value) {
@@ -72,9 +71,9 @@ contract Presale is Ownable {
         return totalContributors;
     }
 
-    // function getTotalContributions() external view returns (uint256) {
-    //     return constructions;
-    // }
+    function getAmountRaised() external view returns (uint256) {
+        return weiRaised;
+    }
 
     function getUserContribution() external view returns (uint256) {
         return contributors[msg.sender];
@@ -144,7 +143,7 @@ contract Presale is Ownable {
     }
 
     // Withdraw money from the presale contract
-    function withdraw(address _wallet, uint256 _amount)
+    function withdrawEther(address _wallet, uint256 _amount)
         external
         payable
         onlyOwner
@@ -162,20 +161,21 @@ contract Presale is Ownable {
      * @dev recieves Eth and requires some token to be transfered to the msg.sender
      */
     function buyToken() public payable {
+        uint256 weiAmount = msg.value;
         // Make sure presale is currently not paused
         require(allowed == true, "Presale: Presale is paused");
         // Must send more that minEth
-        require(msg.value >= minPurchase, "Presale: Buy quantity is low");
+        require(weiAmount >= minPurchase, "Presale: Buy quantity is low");
         // Sender doesn't exceed maxCap
         require(
-            contributors[msg.sender].add(msg.value) < purchaseCap,
+            contributors[msg.sender].add(weiAmount) < purchaseCap,
             "Presale: Attained max cap"
         );
         // Get token value
-        uint256 tokenQuantity = getTokensPerEth(msg.value);
+        uint256 tokenQuantity = getTokensPerEth(weiAmount);
 
         // // Recieve the Ethereum into our wallet
-        // payable(wallet).transfer(msg.value);
+        payable(wallet).transfer(msg.value);
 
         // Pay the sender in our token
         require(
@@ -186,10 +186,11 @@ contract Presale is Ownable {
         totalReceived = totalReceived.add(msg.value);
         contributors[msg.sender] = contributors[msg.sender].add(msg.value);
         totalContributors.add(1);
-        // constructions.push(Contribution(block.timestamp, msg.value, msg.sender));
+        weiRaised.add(weiAmount);
+        emit TokensPurchased(_msgSender(), weiAmount, tokenQuantity);
     }
 
     function getTokensPerEth(uint256 weiVal) public view returns (uint256) {
-        return weiVal.mul(rate).div(1 ether);
+        return weiVal.mul(rate);
     }
 }

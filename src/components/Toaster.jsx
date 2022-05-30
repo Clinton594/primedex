@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setToast, defaultStatus } from "../redux/statusReducer";
+import { setToast, defaultStatus } from "../redux/toastReducer";
 
 export default function Toaster() {
   const dispatch = useDispatch();

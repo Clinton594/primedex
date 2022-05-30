@@ -15,12 +15,13 @@ const networks = [
     address: "",
   },
   {
-    name: "Rinkeby Testnet",
-    url: "INFURA_LINK",
-    chainId: 4,
-    networkId: 4,
-    address: "",
+    name: "Kovan Testnet",
+    url: `wss://kovan.infura.io/ws/v3/${process.env.REACT_APP_INFURA_PROJECT_ID}`,
+    chainId: 42,
+    networkId: 42,
+    address: "0xFF040e8F90096406d3D68753AD3a08B471fD50bE",
   },
 ];
-
+// Kovan token address = 0xaB2Ecb0C304BC0609e75bdB46435C57b48b60A57
+// Kovan presale address = 0xFF040e8F90096406d3D68753AD3a08B471fD50bE
 export default networks;

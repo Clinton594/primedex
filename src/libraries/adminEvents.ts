@@ -158,12 +158,16 @@ export const buyToken = async (amount: number, web3: any, callback: Function) =>
 
   try {
     const value = toWei(amount).toString();
+    console.log(value);
 
     const contractInstance = await getContractInstance(library, chainId, account);
     const result = await contractInstance.buyToken({ from: account, value });
     result.wait().then((response: any) => {
       callback(response);
     });
+
+    // const result = await contractInstance.buyToken({ from: account, value });
+    // console.log(result.toString());
   } catch ({ data }: any) {
     return data;
   }

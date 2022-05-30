@@ -9,7 +9,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Iresponse, IStore } from "../types";
 import projectConfig from "../constants/project.config";
 import { setEnddate, setMinMaxState, setRate, setStatus } from "../redux/contractReducer";
-import { setToast } from "../redux/statusReducer";
+import { setToast } from "../redux/toastReducer";
 import Toaster from "../components/Toaster";
 import { num_format } from "../libraries/utils";
 import Footer from "../components/Footer";

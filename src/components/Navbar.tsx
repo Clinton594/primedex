@@ -26,7 +26,7 @@ import {
 import { setBalance, setConnection, setIsAdmin, setWallet, setWalletVisibility } from "../redux/presaleReducer";
 import { setAll, setMinMaxState } from "../redux/contractReducer";
 
-export default function Navbar() {
+export default function Navbar({ setCenterLoading }: any) {
   const dispatch = useDispatch();
   const { presale } = useSelector((store: IStore) => store);
   const { active, deactivate, activate, account, chainId, library, connector } = useWeb3React();
@@ -52,7 +52,7 @@ export default function Navbar() {
     } else {
       dispatch(setBalance(0));
     }
-  }, [active, account]);
+  }, [active, account, dispatch, library]);
 
   // jQuery scroll effects
   useEffect(() => {
@@ -89,11 +89,12 @@ export default function Navbar() {
       };
       dispatch(setMinMaxState(await getMinMax(contractInstance)));
       dispatch(setAll(card));
+      setCenterLoading(false);
       setTimeout(() => {
         dispatch(setIsAdmin(account === owner));
       }, 1000);
     })();
-  }, [account, chainId, library, dispatch]);
+  }, [account, chainId, library, dispatch, setCenterLoading]);
   return (
     <header className="sticktop">
       <div className="menusec">

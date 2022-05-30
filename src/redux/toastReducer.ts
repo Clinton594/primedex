@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Itoast } from "../types/";
+import { Itoast } from "../types";
 
 export const defaultStatus: Itoast = { title: "", message: "", status: false, loading: false, show: false };
 

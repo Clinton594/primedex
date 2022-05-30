@@ -12,12 +12,14 @@ export const getContractInstance = async (provider: any, chainID: number | undef
     signer = provider.getSigner(account);
   } else {
     // Not connected to any wallet
-    chainID = 4;
+    chainID = 42;
     if (process.env.NODE_ENV === "development") {
-      chainID = 1337;
-      signer = new ethers.providers.JsonRpcProvider(networks.filter(({ chainId }) => chainID === chainId)[0].url);
-    } else signer = ethers.getDefaultProvider({ name: "rinkeby", chainId: chainID });
+      chainID = 42;
+
+      signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
+    } else signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
   }
+
   return new ethers.Contract(networks.filter(({ chainId }) => chainID === chainId)[0].address, presale.abi, signer);
 };
 

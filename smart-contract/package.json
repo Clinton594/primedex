@@ -9,5 +9,8 @@
     "@openzeppelin/contracts": "^4.5.0",
     "@truffle/hdwallet-provider": "^2.0.8",
     "expect": "^28.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.1"
   }
 }

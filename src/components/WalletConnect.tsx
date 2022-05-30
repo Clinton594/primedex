@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connectToWallet, injectProvider } from "../libraries/connectors";
 import { setConnecting } from "../redux/presaleReducer";
-import { setToast } from "../redux/statusReducer";
+import { setToast } from "../redux/toastReducer";
 import { Iresponse, IStore } from "../types";
 import Binance from "./icons/Binance";
 import Coinbase from "./icons/Coinbase";

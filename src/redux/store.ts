@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import presale from "./presaleReducer";
-import status from "./statusReducer";
+import status from "./toastReducer";
 import contract from "./contractReducer";
 import { IStore } from "../types";
 

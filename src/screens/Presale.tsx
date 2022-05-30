@@ -1,7 +1,7 @@
 import Countdown from "react-countdown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useWeb3React } from "@web3-react/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ScrollAnimation from "react-animate-on-scroll";
 
 import Navbar from "../components/Navbar";
@@ -12,11 +12,16 @@ import { ISale, IStore, keyOfISale } from "../types";
 import { getTokenQty } from "../libraries/connectors";
 import projectConfig from "../constants/project.config";
 import { debounce, num_format } from "../libraries/utils";
+import Spinner from "../components/Spinner";
+import { setToast } from "../redux/toastReducer";
 
 export default function Presale() {
+  const dispatch = useDispatch();
   const [formdata, setFormdata] = useState({ token: 0.0, crypto: 0.0 });
   const { presale, contract } = useSelector((store: IStore) => store);
   const { active, library, chainId, account } = useWeb3React();
+
+  const [centerLoading, setCenterLoading] = useState(true);
 
   const date = contract.enddate.split("-").map((x: string) => +x);
 
@@ -27,12 +32,14 @@ export default function Presale() {
     setFormdata({ token, crypto: e.target.value });
   });
 
-  const sumbmitBuyToken = async (e: any) => {
+  const sumbmitBuyToken = (e: any) => {
     e.preventDefault();
     if (typeof account === "string") {
       buyToken(formdata.crypto, { active, library, chainId, account }, (response: any) => {
         console.log(response);
       });
+    } else {
+      dispatch(setToast({ status: false, title: "Buy Token", message: "Wallet is not Properly initialized" }));
     }
   };
 
@@ -42,7 +49,7 @@ export default function Presale() {
 
   return (
     <>
-      <Navbar />
+      <Navbar setCenterLoading={setCenterLoading} />
       <Toaster />
       <section>
         <div className="block sliceimg">
@@ -55,6 +62,14 @@ export default function Presale() {
             className="parallax no-parallax scrolly-invisible breathing"
           ></div>
           <div className="container">
+            {centerLoading && (
+              <div className="row">
+                <div className="col-sm-12 d-flex justify-content-center">
+                  <Spinner animation="border" size="md" variant="primary" />
+                </div>
+              </div>
+            )}
+
             {contract.status && (
               <>
                 <div className="row">
@@ -90,6 +105,7 @@ export default function Presale() {
                                   <input
                                     type="number"
                                     step="0.05"
+                                    min={0.0001}
                                     className="me-auto mt-3 dcfVCh"
                                     placeholder={`Swap how many BNB ?`}
                                     defaultValue={formdata.crypto}
@@ -168,12 +184,15 @@ export default function Presale() {
                                       <span className="seconds">{seconds}</span>
                                       <p className="seconds_ref">seconds</p>
                                     </li>
-                                    <hr />
+                                    <li></li>
                                   </ul>
                                 </>
                               )}
                             />
                             <div className="">
+                              <div className="w-100 float-left m-0">
+                                <hr />
+                              </div>
                               <ul className="costb">
                                 <li>
                                   <h3>$58,458,478</h3>
