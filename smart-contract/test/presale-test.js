@@ -66,11 +66,11 @@ contract("Testing Two Contracts", (accounts) => {
       expect(formatEther(balance)).toBe("995000"); //995,000 after transfering to the sender
     });
 
-    it.skip("Confirm the amount of Ether in the recepient's address is 100.5", async () => {
-      provider.getBalance(accounts[5]).then((balance) => {
-        expect(formatEther(balance)).toBe("101");
-      });
-    });
+    // it.skip("Confirm the amount of Ether in the recepient's address is 100.5", async () => {
+    //   provider.getBalance(accounts[5]).then((balance) => {
+    //     expect(formatEther(balance)).toBe("101");
+    //   });
+    // });
 
     it("Confirm the amount of Ether in the presale contract", async () => {
       provider.getBalance(presale.address).then((balance) => {
@@ -81,6 +81,17 @@ contract("Testing Two Contracts", (accounts) => {
     it("Confirm the amount of token recieved in the sender's wallet", async () => {
       const balance = await token.balanceOf(accounts[2]);
       expect(formatEther(balance)).toBe("5000");
+    });
+
+    it("Should transfer all token to address 4", async () => {
+      await presale.getUnsoldTokens(accounts[4]);
+      const balance = await token.balanceOf(presale.address);
+      expect(formatEther(balance)).toBe("0"); //0
+    });
+
+    it("Confirm account 4 has gotten the 100,000 tokens", async () => {
+      const balance = await token.balanceOf(accounts[4]);
+      expect(formatEther(balance)).toBe("995000"); //995,000 after transfering to the sender
     });
   });
 });

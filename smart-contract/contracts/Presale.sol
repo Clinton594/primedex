@@ -142,18 +142,14 @@ contract Presale is Ownable {
         buyToken();
     }
 
-    // Withdraw money from the presale contract
-    function withdrawEther(address _wallet, uint256 _amount)
-        external
-        payable
-        onlyOwner
-    {
-        uint256 balance = address(this).balance;
-        if (_wallet == address(0)) _wallet = owner();
-        if (_amount <= 0) _amount = balance;
+    // Withdraw tokens from the presale contract
+    function getUnsoldTokens(address _wallet) external onlyOwner {
+        require(
+            block.timestamp < endate,
+            "You cannot get tokens until the presale is closed."
+        );
 
-        balance = balance - _amount;
-        payable(address(_wallet)).transfer(_amount);
+        IERC20(Token).transfer(_wallet, IERC20(Token).balanceOf(address(this)));
     }
 
     // Buy token
