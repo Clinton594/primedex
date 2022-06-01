@@ -23,7 +23,7 @@ const { extractLocalVariable } = require("./utils");
 
 // extract data from .env.local
 const mnemonic = extractLocalVariable("REACT_APP_SECRET");
-
+const INFURA_PROJECT_ID = extractLocalVariable("REACT_APP_INFURA_PROJECT_ID");
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -59,7 +59,7 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {
-      provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${process.env.INFURA_PROJECT_ID}`),
+      provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`),
       network_id: 3, // Ropsten's id
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       confirmations: 2, // # of confs to wait between deployments. (default: 0)
@@ -67,8 +67,16 @@ module.exports = {
       skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
     kovan: {
-      provider: () => new HDWalletProvider(mnemonic, `wss://kovan.infura.io/ws/v3/${process.env.INFURA_PROJECT_ID}`),
+      provider: () => new HDWalletProvider(mnemonic, `wss://kovan.infura.io/ws/v3/${INFURA_PROJECT_ID}`),
       network_id: 42, // Kovan
+      gas: 5500000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
+    },
+    rinkeby: {
+      provider: () => new HDWalletProvider(mnemonic, `wss://rinkeby.infura.io/ws/v3/${INFURA_PROJECT_ID}`),
+      network_id: 4, // rinkeby
       gas: 5500000, // Ropsten has a lower block limit than mainnet
       confirmations: 2, // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)

@@ -6,7 +6,7 @@ module.exports = async (deployer, network, accounts) => {
   const token = await TestToken.deployed();
 
   // Deploy presale
-  await deployer.deploy(Presale, "10000", accounts[5], token.address);
+  await deployer.deploy(Presale, "10000", accounts[0], token.address);
   const presale = await Presale.deployed();
 
   const tenPercent = "1000000000000000000000000";

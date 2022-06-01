@@ -14,9 +14,12 @@ export const getContractInstance = async (provider: any, chainID: number | undef
     // Not connected to any wallet
     chainID = 42;
     if (process.env.NODE_ENV === "development") {
-      chainID = 42;
-
-      signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
+      if (projectConfig.deployed) {
+        signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
+      } else {
+        chainID = 1337;
+        signer = new ethers.providers.JsonRpcProvider("http://127.0.0.1:9545/");
+      }
     } else signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
   }
 

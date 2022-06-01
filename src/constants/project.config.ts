@@ -1,4 +1,5 @@
 const projectConfig = {
+  deployed: true,
   name: "PrimeDEX Presale",
   favicon: "/logo.png",
   logo: "/logo.png",
