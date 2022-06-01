@@ -15,12 +15,12 @@ export const getContractInstance = async (provider: any, chainID: number | undef
     chainID = 42;
     if (process.env.NODE_ENV === "development") {
       if (projectConfig.deployed) {
-        signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
+        signer = new ethers.providers.InfuraProvider("rinkeby", process.env.REACT_APP_INFURA_PROJECT_ID);
       } else {
         chainID = 1337;
         signer = new ethers.providers.JsonRpcProvider("http://127.0.0.1:9545/");
       }
-    } else signer = new ethers.providers.InfuraProvider("kovan", process.env.REACT_APP_INFURA_PROJECT_ID);
+    } else signer = new ethers.providers.InfuraProvider("rinkeby", process.env.REACT_APP_INFURA_PROJECT_ID);
   }
 
   return new ethers.Contract(networks.filter(({ chainId }) => chainID === chainId)[0].address, presale.abi, signer);
