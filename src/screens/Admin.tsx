@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Section from "../components/Section";
 import Fieldset, { Row, Col, Card, Form, FormElement, Button, Container } from "../components/Fieldset";
 import Spinner from "../components/Spinner";
@@ -19,7 +19,7 @@ export default function Admin() {
   const [loading, toggleLoading] = useState(defaultState);
   const dispatch = useDispatch();
   const web3 = useWeb3React();
-  const { presale, contract, status } = useSelector((store: IStore) => store);
+  const { contract } = useSelector((store: IStore) => store);
 
   const triggerToggleStatus = () => {
     toggleLoading({ ...loading, status: true }); //start loading circle
@@ -62,7 +62,6 @@ export default function Admin() {
 
   const triggerWithdraw = (e: any) => {
     e.preventDefault();
-    const val = e.target[0].value;
 
     toggleLoading({ ...loading, withdraw: true }); //start loading circle
   };
